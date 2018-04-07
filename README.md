@@ -22,4 +22,5 @@ second row: job 1 has 6 operations, the first operation can be processed by 1 ma
 
 ## Results
 
+Test file - result with longest operations first
 ![Test file - result with longest operations first](results/test_longest_operation_first.png)
