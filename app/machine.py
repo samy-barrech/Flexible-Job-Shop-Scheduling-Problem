@@ -8,17 +8,21 @@ class Machine:
 		self.__current_time = 0
 		self.__available_places = [i for i in range(max_operations)]
 
+	# Return the machine's id
 	@property
 	def id_machine(self):
 		return self.__id_machine
 
+	# Return the operations done by the machine
 	@property
 	def operations_done(self):
 		return self.__operations_done
 
+	# Return if the machine is working at max capacity
 	def is_working_at_max_capacity(self):
 		return len(self.__processed_operations) == self.__max_operations
 
+	# Add an operation to the treatment list of the machine
 	def add_operation(self, activity, operation):
 		if self.is_working_at_max_capacity():
 			raise EnvironmentError("Machine already working at max capacity")
@@ -31,6 +35,7 @@ class Machine:
 
 		self.__processed_operations.append((activity, operation))
 
+	# Method to simulate a work process during one unit of time
 	def work(self):
 		self.__current_time += 1
 		for activity, operation in self.__processed_operations:

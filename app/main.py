@@ -50,16 +50,16 @@ machines_list = []
 for id_machine in range(1, number_total_machines + 1):
 	machines_list.append(Machine(id_machine, number_max_operations))
 
-print("Lancement scheduler avec " + str(number_total_machines) + " machines qui peuvent faire " + str(number_max_operations) + " opération(s) simultanée(s) et " + str(number_total_jobs) + " jobs")
+print("Scheduler launched with the following parameters:")
+print('\t', str(number_total_jobs), "jobs")
+print('\t', str(number_total_machines), "machine(s)")
+print('\t', "Machine(s) can process", str(number_max_operations), "operation(s) at the same time")
 
 start = timeit.default_timer()
 s = Scheduler(machines_list, number_max_operations, jobs_list)
 s.run()
 stop = timeit.default_timer()
 
-print("Terminé en " + str(stop-start) + " secondes")
-
-for job in jobs_list:
-	print(job)
+print("Finished in " + str(stop-start) + " seconds")
 
 Drawer.draw(number_total_machines, number_max_operations, jobs_list)

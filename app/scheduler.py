@@ -13,21 +13,28 @@ class Scheduler:
 			current_activity = job.current_activity
 
 			# Find the operations with the longest duration
-			for operation in current_activity.next_operations:
-				if best_candidates.get(operation.id_machine) is None:
-					best_candidates.update({operation.id_machine: [(current_activity, operation)]})
-				elif len(best_candidates.get(operation.id_machine)) < self.__max_operations:
-					list_operations = best_candidates.get(operation.id_machine)
-					list_operations.append((current_activity, operation))
-					best_candidates.update({operation.id_machine: list_operations})
+			for current_operation in current_activity.next_operations:
+				if best_candidates.get(current_operation.id_machine) is None:
+					best_candidates.update({current_operation.id_machine: [(current_activity, current_operation)]})
+				elif len(best_candidates.get(current_operation.id_machine)) < self.__max_operations:
+					list_operations = best_candidates.get(current_operation.id_machine)
+					list_operations.append((current_activity, current_operation))
+					best_candidates.update({current_operation.id_machine: list_operations})
 				else:
-					list_operations = list(filter(lambda element: element.duration < operation.duration, best_candidates.get(operation.id_machine)))
+					list_operations = best_candidates.get(current_operation.id_machine)
+
+					for key, (_, operation) in enumerate(list_operations):
+						if operation.duration < current_operation.duration:
+							list_operations.pop(key)
+							break
+
 					if len(list_operations) < self.__max_operations:
-						list_operations.append((current_activity, operation))
-						best_candidates.update({operation.id_machine: list_operations})
+						list_operations.append((current_activity, current_operation))
+						best_candidates.update({current_operation.id_machine: list_operations})
 
 		return best_candidates
 
+	# Run the scheduler
 	def run(self):
 		current_step = 0
 
