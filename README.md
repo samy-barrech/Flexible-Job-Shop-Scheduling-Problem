@@ -22,12 +22,12 @@ second row: job 1 has 6 operations, the first operation can be processed by 1 ma
 
 ## Results
 
-#### Test file
+### Test file
 
 **Longest operations first:** done in 14 units of time
 ![Test file - result with longest operations first](results/test_longest_operation_first.png)
 
-#### Barnes - mt10c1
+### Barnes - mt10c1
 
 **Longest operations first:** done in 1295 units of time
 ![Test file - result with longest operations first](results/barnes_mt10c1_longest_operation_first.png)
