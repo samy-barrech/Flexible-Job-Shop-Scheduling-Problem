@@ -1,62 +1,65 @@
+from job import Job
+from activity import Activity
+from operation import Operation
+from machine import Machine
+from scheduler import Scheduler
+from drawer import Drawer
+
 import os
 import re
+import timeit
 
 
-class Scheduler(object):
-	def __init__(self, machines_number, jobs_number, tasks):
-		self.t = 0
-		self.machines_in_used = []
-		self.machines_number = int(machines_number)
-		self.jobs_number = int(jobs_number)
-		self.tasks_to_be_done = tasks
-		self.tasks_done = []
-		print("Jobs and activities:\n", self.tasks_to_be_done)
-
-	# Find the next best operations to start with
-	def find_start(self):
-		starter = {}
-
-		for i in range(1, self.machines_number + 1):
-			starter.update({i: None})
-
-		for job_id, activities in enumerate(self.tasks_to_be_done):
-			first_activity = activities[0]
-			max_operation = None
-
-			# Find the operation with the longest duration
-			for operation_id, operation in enumerate(first_activity):
-				if max_operation is None or max_operation.get('Duration') < operation.get('Duration'):
-					max_operation = {'Index': operation_id, 'Duration': operation.get('Duration')}
-
-			operation = first_activity[max_operation.get('Index')]
-			machine_id = operation.get('Machine')
-			if starter.get(machine_id) is None or starter.get(machine_id).get('Operation').get('Duration') < max_operation.get('Duration'):
-				starter.update({machine_id: {'Job': job_id, 'Operation_Index': max_operation.get('Index'), 'Operation': operation}})
-
-		return starter
-
-	def run(self):
-		starter = self.find_start()
-		
-
-
+# Parser
 with open(os.path.join(os.getcwd(), "data/test.fjs"), "r") as data:
-	jobs, machines, operation = re.findall('\S+', data.readline())
+	total_jobs, total_machines, max_operations = re.findall('\S+', data.readline())
+	number_total_jobs, number_total_machines, number_max_operations = int(total_jobs), int(total_machines), int(max_operations)
 	jobs_list = []
+	# Current job's id
+	id_job = 1
 
 	for line in data:
-		parsed_line = re.findall('\S+', line)  # Split data with multiple spaces as separator
-		number_operations = int(parsed_line[0])
-		activities_list = []
+		# Split data with multiple spaces as separator
+		parsed_line = re.findall('\S+', line)
+		# Total number of operations for the job
+		number_total_operations = int(parsed_line[0])
+		# Current job
+		job = Job(id_job)
+		# Current activity's id
+		id_activity = 1
+		# Current item of the parsed line
 		i = 1
-		while i < len(parsed_line):
-			number_machines = int(parsed_line[i])
-			list_operations = []
-			for j in range(0, number_machines):
-				list_operations.append({'Machine': int(parsed_line[i + 1 + 2 * j]), 'Duration': int(parsed_line[i + 2 * (j + 1)]), 'Status': False})
-			activities_list.append(list_operations)
-			i += 1 + 2 * number_machines
-		jobs_list.append(activities_list)
 
-s = Scheduler(machines, jobs, jobs_list)
-s.find_start()
+		while i < len(parsed_line):
+			# Total number of operations for the activity
+			number_operations = int(parsed_line[i])
+			# Current activity
+			activity = Activity(job, id_activity)
+			for id_operation in range(1, number_operations + 1):
+				activity.add_operation(Operation(id_operation, int(parsed_line[i + 2 * id_operation - 1]), int(parsed_line[i + 2 * id_operation])))
+
+			job.add_activity(activity)
+			i += 1 + 2 * number_operations
+			id_activity += 1
+
+		jobs_list.append(job)
+		id_job += 1
+
+# Machines
+machines_list = []
+for id_machine in range(1, number_total_machines + 1):
+	machines_list.append(Machine(id_machine, number_max_operations))
+
+print("Lancement scheduler avec " + str(number_total_machines) + " machines qui peuvent faire " + str(number_max_operations) + " opération(s) simultanée(s) et " + str(number_total_jobs) + " jobs")
+
+start = timeit.default_timer()
+s = Scheduler(machines_list, number_max_operations, jobs_list)
+s.run()
+stop = timeit.default_timer()
+
+print("Terminé en " + str(stop-start) + " secondes")
+
+for job in jobs_list:
+	print(job)
+
+Drawer.draw(number_total_machines, number_max_operations, jobs_list)
