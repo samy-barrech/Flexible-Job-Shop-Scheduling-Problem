@@ -3,6 +3,7 @@ from activity import Activity
 from operation import Operation
 from machine import Machine
 from scheduler import Scheduler
+from heuristics import Heuristics
 from drawer import Drawer
 
 import os
@@ -11,7 +12,7 @@ import timeit
 
 
 # Parser
-with open(os.path.join(os.getcwd(), "data/test.fjs"), "r") as data:
+with open(os.path.join(os.getcwd(), "data/Barnes/Text/mt10c1.fjs"), "r") as data:
 	total_jobs, total_machines, max_operations = re.findall('\S+', data.readline())
 	number_total_jobs, number_total_machines, number_max_operations = int(total_jobs), int(total_machines), int(max_operations)
 	jobs_list = []
@@ -56,7 +57,7 @@ print('\t', str(number_total_machines), "machine(s)")
 print('\t', "Machine(s) can process", str(number_max_operations), "operation(s) at the same time")
 
 start = timeit.default_timer()
-s = Scheduler(machines_list, number_max_operations, jobs_list)
+s = Scheduler(machines_list, number_max_operations, jobs_list, Heuristics.find_next_longest_operations)
 s.run()
 stop = timeit.default_timer()
 
