@@ -1,31 +1,30 @@
 class Heuristics:
-	# Find the next longest operations
+	# When a choice between multiple operations is available, always pick the first one
 	@staticmethod
-	def find_next_longest_operations(jobs_to_be_done, max_operations):
+	def select_first_operation(jobs_to_be_done, max_operations):
 		best_candidates = {}
 
 		for job in jobs_to_be_done:
 			current_activity = job.current_activity
+			best_operation = current_activity.next_operations[0]
 
-			# Find the operations with the longest duration
-			for current_operation in current_activity.next_operations:
-				if best_candidates.get(current_operation.id_machine) is None:
-					best_candidates.update({current_operation.id_machine: [(current_activity, current_operation)]})
-				elif len(best_candidates.get(current_operation.id_machine)) < max_operations:
-					list_operations = best_candidates.get(current_operation.id_machine)
-					list_operations.append((current_activity, current_operation))
-					best_candidates.update({current_operation.id_machine: list_operations})
-				else:
-					list_operations = best_candidates.get(current_operation.id_machine)
+			if best_candidates.get(best_operation.id_machine) is None:
+				best_candidates.update({best_operation.id_machine: [(current_activity, best_operation)]})
+			elif len(best_candidates.get(best_operation.id_machine)) < max_operations:
+				list_operations = best_candidates.get(best_operation.id_machine)
+				list_operations.append((current_activity, best_operation))
+				best_candidates.update({best_operation.id_machine: list_operations})
+			else:
+				list_operations = best_candidates.get(best_operation.id_machine)
 
-					for key, (_, operation) in enumerate(list_operations):
-						if operation.duration < current_operation.duration:
-							list_operations.pop(key)
-							break
+				for key, (_, operation) in enumerate(list_operations):
+					if operation.duration < best_operation.duration:
+						list_operations.pop(key)
+						break
 
-					if len(list_operations) < max_operations:
-						list_operations.append((current_activity, current_operation))
-						best_candidates.update({current_operation.id_machine: list_operations})
+				if len(list_operations) < max_operations:
+					list_operations.append((current_activity, best_operation))
+					best_candidates.update({best_operation.id_machine: list_operations})
 
 		return best_candidates
 

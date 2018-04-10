@@ -40,7 +40,7 @@ class Job:
 	def activities_done(self):
 		return self.__activities_done
 
-	# Method an activity call to signal it's done
+	# Method an activity calls to signal it's done
 	def activity_is_done(self, activity):
 		if not activity.is_done:
 			raise EnvironmentError("This activity is not done")

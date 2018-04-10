@@ -17,18 +17,18 @@ class Drawer:
 		for job in jobs:
 			for activity in job.activities_done + job.activities_to_be_done:
 				# Add all done operations
-				for operation in activity.operations_done:
-					# If it's the first operation add on the machine, initialize the list
-					if operations_done.get(operation.id_machine) is None:
-						list_operations = []
-					# Else, get the previously added operations
-					else:
-						list_operations = operations_done.get(operation.id_machine)
+				operation = activity.operation_done
+				# If it's the first operation add on the machine, initialize the list
+				if operations_done.get(operation.id_machine) is None:
+					list_operations = []
+				# Else, get the previously added operations
+				else:
+					list_operations = operations_done.get(operation.id_machine)
 
-					# Append the current operation with its job's id and activity's id
-					list_operations.append((job.id_job, activity.id_activity, operation))
-					# Update the dictionary
-					operations_done.update({operation.id_machine: list_operations})
+				# Append the current operation with its job's id and activity's id
+				list_operations.append((job.id_job, activity.id_activity, operation))
+				# Update the dictionary
+				operations_done.update({operation.id_machine: list_operations})
 
 		# Define random colors for jobs
 		colors = ['#%06X' % random.randint(0,256**3-1) for _ in range(len(jobs))]

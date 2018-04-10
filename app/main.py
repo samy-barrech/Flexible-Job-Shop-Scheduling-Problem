@@ -57,7 +57,7 @@ print('\t', str(number_total_machines), "machine(s)")
 print('\t', "Machine(s) can process", str(number_max_operations), "operation(s) at the same time")
 
 start = timeit.default_timer()
-s = Scheduler(machines_list, number_max_operations, jobs_list, Heuristics.find_next_longest_operations)
+s = Scheduler(machines_list, number_max_operations, jobs_list, Heuristics.select_first_operation)
 s.run()
 stop = timeit.default_timer()
 

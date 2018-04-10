@@ -3,7 +3,7 @@ class Activity:
 		self.__job = job
 		self.__id_activity = id_activity
 		self.__operations_to_be_done = []
-		self.__operations_done = []
+		self.__operation_done = None
 
 	# Display the activity nicer
 	def __str__(self):
@@ -13,9 +13,8 @@ class Activity:
 		for operation in self.__operations_to_be_done:
 			output += str(operation) + "\n"
 
-		output += "Operations done\n"
-		for operation in self.__operations_done:
-			output += str(operation) + "\n"
+		output += "Operation done\n"
+		output += str(self.__operation_done) + "\n"
 
 		return output
 
@@ -36,7 +35,7 @@ class Activity:
 	# Return if the activity is done
 	@property
 	def is_done(self):
-		return len(self.operations_to_be_done) == 0
+		return not(self.__operation_done is None)
 
 	# Return the list of all the operations yet to be done
 	@property
@@ -45,19 +44,17 @@ class Activity:
 
 	# Return the list of all the operations already done
 	@property
-	def operations_done(self):
-		return self.__operations_done
+	def operation_done(self):
+		return self.__operation_done
 
 	# Allow a machine to say to an activity that it finished an operation
 	def terminate_operation(self, operation):
 		# Remove the operation from the list of the operations yet to be done
 		self.__operations_to_be_done = list(filter(lambda element: element.id_operation != operation.id_operation, self.__operations_to_be_done))
-		# Append the operation to the lsit of the operations already done
-		self.__operations_done.append(operation)
-		# If there is no operation yet to be done anymore, signal to the job that the activity is done
-		if len(self.__operations_to_be_done) == 0:
-			self.__job.activity_is_done(self)
+		# Append the operation to the list of the operations already done
+		self.__operation_done = operation
+		self.__job.activity_is_done(self)
 
 	@property
 	def next_operations(self):
-		return list(filter(lambda operation: not operation.is_pending, self.__operations_to_be_done))
+		return self.__operations_to_be_done
