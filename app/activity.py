@@ -58,3 +58,7 @@ class Activity:
 	@property
 	def next_operations(self):
 		return self.__operations_to_be_done
+
+	@property
+	def shop_time(self):
+		return self.operation_done.duration if self.is_done else max(self.__operations_to_be_done, key=lambda operation: operation.duration)

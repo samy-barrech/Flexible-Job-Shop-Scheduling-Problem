@@ -1,7 +1,7 @@
 class Heuristics:
 	# When a choice between multiple operations is available, always pick the first one
 	@staticmethod
-	def select_first_operation(jobs_to_be_done, max_operations):
+	def select_first_operation(jobs_to_be_done, max_operations, _):
 		best_candidates = {}
 
 		for job in jobs_to_be_done:
@@ -30,17 +30,38 @@ class Heuristics:
 
 	# LEPT rule
 	@staticmethod
-	def longest_expected_processing_time_first(jobs_to_be_done, max_operations):
+	def longest_expected_processing_time_first(jobs_to_be_done, max_operations, current_time):
 		pass
 
 	# Shortest slack per remaining operations
 	# S/RO = [(Due date - Today’s date) - Total shop time remaining] / Number of operations remaining
 	@staticmethod
-	def shortest_slack_per_remaining_operations(jobs_to_be_done, max_operations):
+	def shortest_slack_per_remaining_operations(jobs_to_be_done, max_operations, current_time):
 		pass
 
 	# Highest critical ratios
 	# CR = Processing Time / (Due Date – Current Time)
 	@staticmethod
-	def highest_critical_ratios(jobs_to_be_done, max_operations):
-		pass
+	def highest_critical_ratios(jobs_to_be_done, max_operations, current_time):
+		best_candidates = {}
+		critical_ratios = {}
+		assignment = {}
+
+		for job in jobs_to_be_done:
+			current_activity = job.current_activity
+
+			# Compute critical ratio for each operation for an activity
+			for operation in current_activity.next_operations:
+				critical_ratio = operation.duration / (job.total_shop_time - current_time)
+				critical_ratios.update({job.id_job: (current_activity, operation, critical_ratio)})
+
+			for id_job, current_activity, operation, critical_ratio in critical_ratios.items():
+				if assignment.get(operation.id_machine) is None:
+					assignment.update({operation.id_machine: (current_activity, operation, critical_ratio)})
+
+				elif len(assignment.get(operation.id_machine)) < max_operations:
+					list_operations = assignment.get(operation.id_machine)
+					list_operations.append((current_activity, operation, critical_ratio))
+					best_candidates.update({operation.id_machine: list_operations})
+
+		# TODO: end that

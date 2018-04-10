@@ -1,19 +1,18 @@
 class Scheduler:
-	def __init__(self, machines, max_operations, jobs, heuristic):
+	def __init__(self, machines, max_operations, jobs):
 		self.__machines = machines
 		self.__jobs_to_be_done = jobs
 		self.__jobs_done = []
 		self.__max_operations = max_operations
-		self.heuristic = heuristic
 
-	# Run the scheduler
-	def run(self):
+	# Run the scheduler with an heuristic
+	def run(self, heuristic):
 		current_step = 0
 
 		while len(self.__jobs_to_be_done) > 0:
 			current_step += 1
 
-			best_candidates = self.heuristic(self.__jobs_to_be_done, self.__max_operations)
+			best_candidates = heuristic(self.__jobs_to_be_done, self.__max_operations, current_step)
 			for id_machine, candidates in best_candidates.items():
 				machine = self.__machines[id_machine-1]
 				for candidate in candidates:
@@ -30,3 +29,4 @@ class Scheduler:
 					self.__jobs_done.append(job)
 
 		print("Done in " + str(current_step) + " units of time")
+

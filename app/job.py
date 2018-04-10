@@ -53,3 +53,11 @@ class Job:
 		if len(self.activities_to_be_done) == 0:
 			raise EnvironmentError("All activities are already done")
 		return self.__activities_to_be_done[0]
+
+	@property
+	def remaining_shop_time(self):
+		return sum(map(lambda activity: activity.shop_time, self.activities_to_be_done))
+
+	@property
+	def total_shop_time(self):
+		return sum(map(lambda activity: activity.shop_time, self.activities_to_be_done + self.activities_done))
