@@ -37,6 +37,8 @@ class Scheduler:
 		from ortools.constraint_solver import pywrapcp
 		import itertools
 
+		print("WARNING : This method may be very long")
+
 		# Create the solver.
 		solver = pywrapcp.Solver('jobshop')
 
@@ -98,7 +100,7 @@ class Scheduler:
 
 				# Creates sequence variables and add disjunctive constraints.
 				all_sequences = []
-				all_machines_jobs = []
+
 				for i in all_machines:
 
 					machines_jobs = []
@@ -135,8 +137,8 @@ class Scheduler:
 				collector.AddObjective(obj_var)
 
 				for i in all_machines:
-					sequence = all_sequences[i];
-					sequence_count = sequence.Size();
+					sequence = all_sequences[i]
+					sequence_count = sequence.Size()
 					for j in range(0, sequence_count):
 						t = sequence.Interval(j)
 						collector.Add(t.StartExpr().Var())
@@ -157,12 +159,12 @@ class Scheduler:
 						seq_size = len(sequence)
 
 						for j in range(0, seq_size):
-							t = seq.Interval(sequence[j]);
+							t = seq.Interval(sequence[j])
 							# Add spaces to output to align columns.
 							sol_line_tasks += t.Name() + " " * (disp_col_width - len(t.Name()))
 
 						for j in range(0, seq_size):
-							t = seq.Interval(sequence[j]);
+							t = seq.Interval(sequence[j])
 							sol_tmp = "[" + str(collector.Value(0, t.StartExpr().Var())) + ","
 							sol_tmp += str(collector.Value(0, t.EndExpr().Var())) + "] "
 							# Add spaces to output to align columns.

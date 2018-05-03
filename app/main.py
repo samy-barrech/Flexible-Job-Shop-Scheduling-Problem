@@ -12,7 +12,7 @@ import timeit
 
 
 # Parser
-with open(os.path.join(os.getcwd(), "data/Barnes/Text/setb4x.fjs"), "r") as data:
+with open(os.path.join(os.getcwd(), "data/test.fjs"), "r") as data:
 	total_jobs, total_machines, max_operations = re.findall('\S+', data.readline())
 	number_total_jobs, number_total_machines, number_max_operations = int(total_jobs), int(total_machines), int(max_operations)
 	jobs_list = []
@@ -58,10 +58,10 @@ print('\t', "Machine(s) can process", str(number_max_operations), "operation(s) 
 
 start = timeit.default_timer()
 s = Scheduler(machines_list, number_max_operations, jobs_list)
-# s.run(Heuristics.select_first_operation)
-s.run_pywrapcp()
+s.run(Heuristics.select_first_operation)
+#s.run_pywrapcp()
 stop = timeit.default_timer()
 
 print("Finished in " + str(stop-start) + " seconds")
 
-# Drawer.draw(number_total_machines, number_max_operations, jobs_list)
+Drawer.draw(number_total_machines, number_max_operations, jobs_list)
