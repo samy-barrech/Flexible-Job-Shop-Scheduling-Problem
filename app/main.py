@@ -66,10 +66,10 @@ while loop:
 	temp_jobs_list = copy.deepcopy(jobs_list)
 	temp_machines_list = copy.deepcopy(machines_list)
 	print(30 * "-", "MENU", 30 * "-")
-	print("1. Scheduler with the longest-operation-first heuristic")
+	print("1. Scheduler with an heuristic")
 	print("2. Genetic Scheduler")
 	print("3. Exit")
-	print(67 * "-")
+	print(66 * "-")
 
 	choice = input("Enter your choice [1-3]: ")
 	if choice == "1":
