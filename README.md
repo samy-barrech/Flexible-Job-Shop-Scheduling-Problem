@@ -6,9 +6,9 @@
 
 - Every row represents one job: the first number is the number of operations of that job, the second number (let's say k>=1) is the number of machines that can process the first operation; then according to k, there are k pairs of numbers (machine,processing time) that specify which are the machines and the processing times; then the data for the second operation and so on...
 
-
 Example: Fisher and Thompson 6x6 instance, alternate name (mt06)
 
+```
 6   6   1   
 6   1   3   1   1   1   3   1   2   6   1   4   7   1   6   3   1   5   6   
 6   1   2   8   1   3   5   1   5   10  1   6   10  1   1   10  1   4   4   
@@ -16,6 +16,7 @@ Example: Fisher and Thompson 6x6 instance, alternate name (mt06)
 6   1   2   5   1   1   5   1   3   5   1   4   3   1   5   8   1   6   9   
 6   1   3   9   1   2   3   1   5   5   1   6   4   1   1   3   1   4   1   
 6   1   2   3   1   4   3   1   6   9   1   1   10  1   5   4   1   3   1   
+```
 
 first row = 6 jobs and 6 machines 1 machine per operation
 second row: job 1 has 6 operations, the first operation can be processed by 1 machine that is machine 3 with processing time 1.
@@ -24,10 +25,29 @@ second row: job 1 has 6 operations, the first operation can be processed by 1 ma
 
 ### Test file
 
-**Longest operations first:** done in 14 units of time
-![Test file - result with longest operations first](results/test_longest_operation_first.png)
+**Shortest operation available:** done in 14 units of time
 
-### Barnes - mt10c1
+    Total time: 0.0033700000058161095 seconds 
 
-**Longest operations first:** done in 1295 units of time
-![Test file - result with longest operations first](results/barnes_mt10c1_longest_operation_first.png)
+![Test file - result with shortest operation available](results/test_shortest_operation.png)
+
+**Genetic algorithm:** done in 11 units of time
+
+    Population: 10, Max Generation: 100, Total time: 2.63803599998937 seconds
+
+![Test file - result with genetic algorithm](results/test_genetic.png)
+
+
+### Barnes - setb4c9
+
+**Shortest operation available:** done in 1245 units of time
+
+    Total time: 0.04628799999773037 seconds 
+
+![Barnes setb4c9 - result with shortest operation available](results/barnes_setb4c9_shortest_operation.png)
+
+**Genetic algorithm:** done in 1196 units of time
+
+    Population: 10, Max Generation: 400, Total time: 131.09917800000403 seconds
+
+![Barnes setb4c9 - result with lgenetic algorithm](results/barnes_setb4c9_genetic.png)

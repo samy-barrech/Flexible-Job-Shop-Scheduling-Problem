@@ -39,8 +39,17 @@ class Activity:
 
 	# Return the list of all the operations yet to be done
 	@property
-	def operations_to_be_done(self):
+	def next_operations(self):
 		return self.__operations_to_be_done
+
+	# Return the shortest operation available
+	@property
+	def shortest_operation(self):
+		candidate_operation = None
+		for operation in self.__operations_to_be_done:
+			if candidate_operation is None or operation.duration < candidate_operation.duration:
+				candidate_operation = operation
+		return operation
 
 	# Return the list of all the operations already done
 	@property
@@ -56,9 +65,14 @@ class Activity:
 		self.__job.activity_is_done(self)
 
 	@property
-	def next_operations(self):
-		return self.__operations_to_be_done
-
-	@property
 	def shop_time(self):
 		return self.operation_done.duration if self.is_done else max(self.__operations_to_be_done, key=lambda operation: operation.duration)
+
+	@property
+	def is_feasible(self):
+		return self.__job.check_if_previous_activity_is_done(self.__id_activity)
+
+	def get_operation(self, id_operation):
+		for operation in self.__operations_to_be_done:
+			if operation.id_operation == id_operation:
+				return operation

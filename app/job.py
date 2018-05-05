@@ -61,3 +61,16 @@ class Job:
 	@property
 	def total_shop_time(self):
 		return sum(map(lambda activity: activity.shop_time, self.activities_to_be_done + self.activities_done))
+
+	def check_if_previous_activity_is_done(self, activity_id):
+		if activity_id == 1:
+			return True
+		for activity in self.__activities_done:
+			if activity.id_activity == activity_id - 1:
+				return True
+		return False
+
+	def get_activity(self, id_activity):
+		for activity in self.__activities_to_be_done:
+			if activity.id_activity == id_activity:
+				return activity

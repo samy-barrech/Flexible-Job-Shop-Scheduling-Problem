@@ -6,7 +6,7 @@ class Heuristics:
 
 		for job in jobs_to_be_done:
 			current_activity = job.current_activity
-			best_operation = current_activity.next_operations[0]
+			best_operation = current_activity.shortest_operation
 
 			if best_candidates.get(best_operation.id_machine) is None:
 				best_candidates.update({best_operation.id_machine: [(current_activity, best_operation)]})
@@ -65,3 +65,20 @@ class Heuristics:
 					best_candidates.update({operation.id_machine: list_operations})
 
 		# TODO: end that
+
+	## Creation of Machine assignment and operation sequence lists (need improvement)
+	##
+	@staticmethod
+	def initialisation_list(jobs_to_be_done):
+		machine_assignment = []
+		operation_sequence = []
+		for job in jobs_to_be_done:
+			for activity in job.activities_to_be_done:
+				operation_sequence.append(job.id_job)
+				machine_assignment.append(activity.next_operations[0].id_machine)
+		print("machine assignment :")
+		for machine in machine_assignment:
+			print(str(machine))
+		print("operation sequence :")
+		for operation in operation_sequence:
+			print(operation)

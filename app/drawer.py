@@ -6,7 +6,7 @@ import matplotlib.patches as patches
 
 class Drawer:
 	@staticmethod
-	def draw(number_machines, max_operations, jobs):
+	def draw(number_machines, max_operations, jobs, filename=None):
 		# Vertical space between operation
 		vertical_space = 1
 		# Vertical height of an operation
@@ -15,7 +15,7 @@ class Drawer:
 		# Dictionary of the operations done, the key correspond to the machine id
 		operations_done = {}
 		for job in jobs:
-			for activity in job.activities_done + job.activities_to_be_done:
+			for activity in job.activities_done:
 				# Add all done operations
 				operation = activity.operation_done
 				# If it's the first operation add on the machine, initialize the list
@@ -66,3 +66,6 @@ class Drawer:
 
 		# Show the schedule order
 		plt.show()
+		# Saving the scheduler order
+		if not(filename is None):
+			plt.savefig(filename, bbox_inches='tight')
