@@ -1,0 +1,123 @@
+%%novalidate
+
+\usepackage{tikz}
+\usepackage{calc}
+\usepackage{booktabs}
+%\usepackage{hyperref}
+
+% colors
+\definecolor{color1}{HTML}{000060}
+%\definecolor{color1}{HTML}{8C260F}
+\definecolor{color2}{HTML}{333333}
+\definecolor{color_text}{HTML}{BBBBBB}
+\definecolor{color_bg}{HTML}{2B2B2B}
+\definecolor{color_comment}{HTML}{808080}
+
+% fonts
+\usepackage{fontspec}
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont
+[Path = Fonts/,
+BoldFont=Lato-Bold.ttf,
+ItalicFont=Lato-Italic.ttf,
+BoldItalicFont=Lato-BoldItalic.ttf]
+{Lato-Regular.ttf}
+
+%%%
+
+\usepackage{geometry}
+\geometry{a4paper,
+hmargin=20mm,vmargin=20mm,
+head=0ex,foot=3ex}
+
+\linespread{1.3}
+
+\usepackage[hang]{caption}
+\DeclareCaptionFormat{upper}{#1#2\uppercase{#3}\par}
+\captionsetup{labelfont={bf,color=color2},textfont={normalsize,color=color2},format = upper,figurename=FIGURE,tablename=TABLE}
+
+%%% fancy sections
+\usepackage{titlesec}
+%\titleformat{\chapter}{\headingfont\LARGE\bfseries\scshape\color{color1}}{\thechapter}{1em}{}[\titlerule]
+\titleformat{\section}{\color{color1}\headingfont\Large\bfseries\uppercase}{\thesection}{1em}{}[\titlerule]
+\titleformat{\subsection}{\color{color1}\headingfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\color{color1}\headingfont\bfseries}{\thesubsubsection}{1em}{}
+%%%
+
+% head and foot
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\makeatletter
+\rhead{\color{color2} 12 Janvier 2018}
+\makeatother
+\newlength{\myheight}
+\lfoot{
+\settoheight{\myheight}{\thepage}
+\raisebox{-2ex-0.5\myheight}{}
+}
+\cfoot{\color{color2}Méta-Heuristiques}
+\rfoot{\color{color2}\thepage}
+\renewcommand\headrulewidth{0pt}
+\renewcommand\footrulewidth{0pt}
+
+
+%%%
+% custom titlepage
+\usepackage{eso-pic}
+\renewcommand{\maketitle}{
+\begingroup
+\thispagestyle{empty}
+\AddToShipoutPicture*{\put(0,0){\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{Pictures/cover}}}  % Image background
+\centering
+\vspace*{5cm}
+\par\normalfont\fontsize{35}{35}\sffamily\selectfont
+\textbf{Méta-Heuristiques}\\
+{\LARGE Flexible Job Shop Scheduling Problem}\par % Book title
+\vspace*{1cm}
+{\Huge Samy Barrech \\ Jonathan Poncy}\par % Author name
+\endgroup
+\clearpage
+}
+
+%%%
+
+
+%%% fancy boxes
+\usepackage{tcolorbox}
+\usepackage{wrapfig}
+\def\fullboxbegin{
+\bigskip
+\begin{tcolorbox}[colback=color1,colframe=color1,coltext=white,arc=0mm,boxrule=0pt]
+}
+\def\fullboxend{\end{tcolorbox}\medskip}
+%
+\def\leftboxbegin{
+\begin{wrapfigure}{l}{0.5\textwidth}
+\begin{tcolorbox}[colback=color1,colframe=color1,coltext=white,arc=0mm,boxrule=0pt]
+}
+\def\leftboxend{
+\end{tcolorbox}
+\end{wrapfigure}
+}
+%
+\def\rightboxbegin{
+\begin{wrapfigure}{r}{0.5\textwidth}
+\begin{tcolorbox}[colback=color1,colframe=color1,coltext=white,arc=0mm,boxrule=0pt]
+}
+\def\rightboxend{
+\end{tcolorbox}
+\end{wrapfigure}
+}
+%
+\newcounter{frames}
+\def\frameboxbegin#1{
+\bigskip
+\refstepcounter{frames}
+\begin{tcolorbox}[colback=white,colframe=color1,arc=0mm,title={\textbf{#1}}]
+}
+\def\frameboxend{
+\end{tcolorbox}
+}
+%%%

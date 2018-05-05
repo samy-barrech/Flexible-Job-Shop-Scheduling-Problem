@@ -1,0 +1,69 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage[dvipsnames]{xcolor}
+
+\include{defs}
+
+\newtoggle{InString}{}% Keep track of if we are within a string
+\togglefalse{InString}% Assume not initally in string
+
+\begin{document}
+
+\lstset{
+tabsize=2,
+language=Python,
+breaklines=true,
+postbreak=\mbox{\textcolor{Gray}{$\hookrightarrow$}\space},
+basicstyle=\baselineskip\ttfamily\footnotesize\color{color_text},
+keywordstyle=\bfseries\color{Orange},
+commentstyle=\color{color_comment},
+keywords=[2]{self},
+keywords=[3]{__init__},
+keywords=[4]{None,True,False},
+keywordstyle={[2]\ttfamily\color{Fuchsia}},
+keywordstyle={[3]\ttfamily\color{Plum}},
+keywordstyle={[4]\ttfamily\color{Periwinkle}},
+showstringspaces=false,
+backgroundcolor=\color{color_bg},
+stringstyle=\color{SpringGreen}
+}
+
+
+\maketitle
+
+%----------------------------------------------------------------------------------------
+%	TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+
+\tableofcontents % Print the table of contents itself
+\clearpage
+
+%----------------------------------------------------------------------------------------
+%	CHAPTER 1
+%----------------------------------------------------------------------------------------
+
+\input{report/Chapters/chapter1.tex}
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	CHAPTER 2
+%----------------------------------------------------------------------------------------
+
+\input{report/Chapters/chapter2.tex}
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	CHAPTER 3
+%----------------------------------------------------------------------------------------
+
+\input{report/Chapters/chapter3.tex}
+
+
+\end{document}          
