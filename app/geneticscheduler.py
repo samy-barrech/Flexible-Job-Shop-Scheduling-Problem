@@ -37,14 +37,14 @@ class GeneticScheduler:
 
 	# Initialize an individual for the genetic algorithm
 	def init_individual(self, ind_class, size):
-		print(colored("[DEAP]", "cyan"), "Running the scheduler with an heuristic to get a first solution")
+		print(colored("[GENETIC]", "cyan"), "Running the scheduler with an heuristic to get a first solution")
 		temp_jobs_list = copy.deepcopy(self.__jobs)
 		temp_machines_list = copy.deepcopy(self.__machines)
 
 		# Run the scheduler
 		s = Scheduler(temp_machines_list, 1, temp_jobs_list)
 		initial_time = s.run(Heuristics.select_first_operation, verbose=False)
-		print(colored("[DEAP]", "cyan"), "Initial time the solution take", initial_time)
+		print(colored("[GENETIC]", "cyan"), "Initial time the solution take", initial_time)
 
 		# Retriving all the activities and the operation done
 		list_activities = []
@@ -211,40 +211,39 @@ class GeneticScheduler:
 		self.__toolbox.register("permute", self.permute_individual)
 		self.__toolbox.register("evaluate", self.evaluate_individual)
 
-		print(colored("[DEAP]", "cyan"), "Generating population")
+		print(colored("[GENETIC]", "cyan"), "Generating population")
 		population = self.init_population(total_population)
 
-		best = None
-		print(colored("[DEAP]", "cyan"), "Starting evolution for", max_generation, "generations")
+		best = population[0]
+		best.fitness.values = self.evaluate_individual(best)
+		print(colored("[GENETIC]", "cyan"), "Starting evolution for", max_generation, "generations")
 		for current_generation in range(max_generation):
+			# Generate mutation and permutation probabilities for the next generation
+			mutation_probability = random.randint(0, 100)
+			permutation_probability = random.randint(0, 100)
+			# Evolve the population
+			print(colored("[GENETIC]", "cyan"), "Evolving to generation", current_generation + 1)
+			for key, individual in enumerate(population):
+				population[key] = self.evolve_individual(individual, mutation_probability, permutation_probability)
+				del individual
 			# Evaluate the entire population
 			fitnesses = list(map(self.evaluate_individual, population))
 			for ind, fit in zip(population, fitnesses):
 				ind.fitness.values = fit
-				if best is None or best.fitness.values[0] > ind.fitness.values[0]:
-					print(colored("[DEAP]", "cyan"), "A better individual has been found. New best time = ",
+				if best.fitness.values[0] > ind.fitness.values[0]:
+					print(colored("[GENETIC]", "cyan"), "A better individual has been found. New best time = ",
 						  ind.fitness.values[0])
 					best = copy.deepcopy(ind)
 
-			# Generate mutation and permutation probabilities for the next generation
-			mutation_probability = random.randint(0, 100)
-			permutation_probability = random.randint(0, 100)
-
-			# Evolve the population
-			print(colored("[DEAP]", "cyan"), "Evolving to generation", current_generation + 1)
-			for key, individual in enumerate(population):
-				population[key] = self.evolve_individual(individual, mutation_probability, permutation_probability)
-				del individual
-
-		print(colored("[DEAP]", "cyan"), "Evolution finished")
+		print(colored("[GENETIC]", "cyan"), "Evolution finished")
 		if self.constraint_order_respected(best):
-			print(colored("[DEAP]", "cyan"), "Best time found equals", best.fitness.values[0])
-			print(colored("[DEAP]", "cyan"), "Simulating work on machines")
+			print(colored("[GENETIC]", "cyan"), "Best time found equals", best.fitness.values[0])
+			print(colored("[GENETIC]", "cyan"), "Simulating work on machines")
 			self.run_simulation(best)
-			print(colored("[DEAP]", "cyan"), "Simulation finished")
-			print(colored("[DEAP]", "cyan"), "Genetic scheduler finished")
+			print(colored("[GENETIC]", "cyan"), "Simulation finished")
+			print(colored("[GENETIC]", "cyan"), "Genetic scheduler finished")
 		else:
-			print(colored("[DEAP]", "cyan"), "The individual doesn't match the constraint order")
+			print(colored("[GENETIC]", "cyan"), "The individual doesn't match the constraint order")
 
 		# Reenable stdout
 		if not verbose:
