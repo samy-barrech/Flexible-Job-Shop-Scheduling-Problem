@@ -6,7 +6,6 @@ class Operation:
 		self.__time = None
 		self.__is_pending = False
 		self.__place_of_arrival = None
-		self.__solver_property = None
 
 	# Display the operation nicer
 	def __str__(self):
@@ -69,10 +68,3 @@ class Operation:
 			raise ValueError("Time < 0 is not possible")
 		self.__time = value
 
-	@property
-	def solver_property(self):
-		return self.__solver_property
-
-	@solver_property.setter
-	def solver_property(self, value):
-		self.__solver_property = value
