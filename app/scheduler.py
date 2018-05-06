@@ -1,8 +1,12 @@
 import sys
 
+from colorama import init
+from termcolor import colored
+
 
 class Scheduler:
 	def __init__(self, machines, max_operations, jobs):
+		init()  # Init colorama for color display
 		self.__original_stdout = sys.stdout
 		self.__machines = machines
 		self.__jobs_to_be_done = jobs
@@ -37,7 +41,7 @@ class Scheduler:
 						filter(lambda element: element.id_job != job.id_job, self.__jobs_to_be_done))
 					self.__jobs_done.append(job)
 
-		print("Done in " + str(current_step) + " units of time")
+		print(colored("[SCHEDULER]", "green"), "Done in " + str(current_step) + " units of time")
 
 		# Reenable stdout
 		if not verbose:
