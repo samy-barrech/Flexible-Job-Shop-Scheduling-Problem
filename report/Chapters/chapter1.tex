@@ -8,14 +8,25 @@ On supposera que les machines ne peuvent réaliser qu'une opération à la fois 
 
 \subsection{Structure des jeux de données}
 
+Voici un exemple de jeu de données:
+\lstinputlisting[xleftmargin=2cm,backgroundcolor=\color{white},basicstyle=\ttfamily\footnotesize\color{black}]{./app/data/test.fjs}
 
+La première ligne représente le nombre de jobs, le nombre de machines et enfin le nombre d'opérations que la machine peut réaliser en parallèle. Ensuite, on retrouve une ligne par job. Le premier nombre de la ligne représente le nombre d'activités pour ce job. Le second (que l'on va appeler $k \geq 1$) correspond à la liste des opérations que l'on peut choisir pour réaliser l'activité. On retrouve ensuite $k$ paires correspondant au numéro de la machine et à la durée que prend l'opération, puis les données pour la seconde activité, etc. 
 
 \subsection{Structure de notre projet}
 
+Le code des classes se retrouvent dans les fichiers "job.py", "activity.py", "opertion.py" et "machine.py". Nous ne rentrerons pas dans le détail de ces derniers, le code étant suffisament explicite.
+
 \subsubsection{Classe représentant les jobs}
+
+Un Job se décompose comme un identifiant, la liste des activités à réaliser et la liste des activités déjà réalisées.
 
 \subsubsection{Classe représentant les activités}
 
+Une activité est composée d'un pointeur vers le job auquel elle est rattachée, d'un identifiant d'activité, de la liste des opérations possible et de l'opération réalisée.
+
 \subsubsection{Classe représentant les opérations}
+
+Une opération est décrite par un identifiant, une durée, l'identifiant de la machine qui doit procéder à l'opération, l'instant $t$ où l'opération est commencée, un ordre d'arrivée dans la machine (utile pour dessiner le planning), et d'un booléen pour indiquer si l'opération est en cours de traitement.
 
 \subsubsection{Classe représentant les machines}
