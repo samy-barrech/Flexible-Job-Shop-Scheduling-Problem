@@ -27,7 +27,7 @@ class GeneticScheduler:
 	# Constraint order
 	@staticmethod
 	def constraint_order_respected(individual):
-		list = [(activity.id_job, activity.id_activity) for activity in individual]
+		list = [(activity.id_job, activity.id_activity) for (activity, _) in individual]
 		for key, (id_job, id_activity) in enumerate(list):
 			if id_activity == 1:
 				continue
@@ -185,7 +185,7 @@ class GeneticScheduler:
 			future_individual = self.mutate_individual(future_individual)
 		if random.randint(0, 100) < permutation_probability:
 			future_individual = self.permute_individual(future_individual)
-		return future_individual
+		return future_individual if self.constraint_order_respected(future_individual) else individual
 
 	# Simulate the individual with the machines
 	def run_simulation(self, individual):
@@ -236,11 +236,14 @@ class GeneticScheduler:
 				population[key] = self.evolve_individual(individual, mutation_probability, permutation_probability)
 				del individual
 		print(colored("[DEAP]", "cyan"), "Evolution finished")
-		print(colored("[DEAP]", "cyan"), "Best time found equals", best.fitness.values[0])
-		print(colored("[DEAP]", "cyan"), "Simulating work on machines")
-		self.run_simulation(best)
-		print(colored("[DEAP]", "cyan"), "Simulation finished")
-		print(colored("[DEAP]", "cyan"), "Genetic scheduler finished")
+		if self.constraint_order_respected(best):
+			print(colored("[DEAP]", "cyan"), "Best time found equals", best.fitness.values[0])
+			print(colored("[DEAP]", "cyan"), "Simulating work on machines")
+			self.run_simulation(best)
+			print(colored("[DEAP]", "cyan"), "Simulation finished")
+			print(colored("[DEAP]", "cyan"), "Genetic scheduler finished")
+		else:
+			print(colored("[DEAP]", "cyan"), "The individual doesn't match the constraint order")
 
 		# Reenable stdout
 		if not verbose:
