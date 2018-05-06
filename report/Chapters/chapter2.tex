@@ -8,7 +8,7 @@ Cette méthode permet de trouver une borne supérieure de l'optimum très rapide
 
 \subsubsection{Instanciation de la classe, paramètres de la méthode et initialisation}
 
-\lstinputlisting[firstline=4, lastline=10]{./app/scheduler.py}
+\lstinputlisting[firstline=7, lastline=14]{./app/scheduler.py}
 
 Le constructeur de la classe prend trois paramètres, la liste des machines, le nombre d'opérations en parallèle maximal et la liste des jobs construite avec le parseur. La variable \textit{original\_stdout} permet de supprimer la sortie texte et la rétablir au besoin.
 
@@ -23,13 +23,13 @@ s.run(Heuristics.select_first_operation)
 
 Lors de cet appel, la méthode \textit{run} va commencer par supprimer la sortie standard si indiqué et initialiser la variable \textit{current\_step} à $0$. Cette variable représente l'instant $t$ auquel le système est. 
 
-\lstinputlisting[firstline=12, lastline=17]{./app/scheduler.py}
+\lstinputlisting[firstline=16, lastline=22]{./app/scheduler.py}
 
 \newpage
 
 \subsubsection{Déroulement de l'algorithme}
 
-\lstinputlisting[firstline=20, lastline=38]{./app/scheduler.py}
+\lstinputlisting[firstline=24, lastline=42]{./app/scheduler.py}
 
 La variable \textit{best\_candidates} correspond au retour de l'heuristique considérée. Il s'agit d'un dictionnaire associant aux identifiants des machines la liste des opérations (ainsi que l'activité auxquelles elles sont rattachées) qu'elles devraient traiter à l'instant $t$.
 
@@ -39,10 +39,27 @@ La boucle \textit{for} parcourant \textit{self.\_\_machines} permet de simuler l
 
 \subsubsection{Fin de la méthode \textit{run}}
 
-\lstinputlisting[firstline=40, lastline=47]{./app/scheduler.py}
+\lstinputlisting[firstline=44, lastline=50]{./app/scheduler.py}
 
 On affiche la durée totale que le planning prend et on réactive \textit{std\_out} si nécessaire. 
 
+\newpage
+
 \subsection{Choisir l'opération la plus courte dans une activité comme heuristique}
 
-\lstinputlisting[firstline=2, lastline=29]{./app/heuristics.py}
+\lstinputlisting[firstline=4, lastline=5]{./app/heuristics.py}
+
+Lors de l'appel de cette heuristique, le paramètre de temps n'est pas utile, d'où la wild card utilisée et on commence par initialisé le dictionnaire \textit{best\_candidates}.
+
+\lstinputlisting[firstline=7, lastline=27]{./app/heuristics.py}
+
+Ensuite, pour chaque job qu'il reste à faire, on récupère l'activité en cours. Ici, on considère que la meilleure opération à choisir et celle qui a la durée la plus courte. On met à jour le dictionnaire en fonction de son état :
+\begin{itemize}
+    \item Si la machine n'a aucune opération d'affectée, on ajoute la machine au dictionnaire avec l'activité et l'opération calculée précédemment.
+    \item Si la machine a déjà des opérations d'affectées mais qu'elle ne travaille pas à capacité maximale, on ajoute l'activité et l'opération calculée précédemment à la liste
+    \item Si la machine travaille à capacité maximale, on regarde s'il existe une opération de durée supérieur à celle calculée précédemment et si c'est le cas, on la remplace.
+\end{itemize}
+
+\lstinputlisting[firstline=29, lastline=29]{./app/heuristics.py}
+
+Enfin, on renvoie le dictionnaire calculé.
