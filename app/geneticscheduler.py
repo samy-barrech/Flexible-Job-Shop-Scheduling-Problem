@@ -235,6 +235,7 @@ class GeneticScheduler:
 			for key, individual in enumerate(population):
 				population[key] = self.evolve_individual(individual, mutation_probability, permutation_probability)
 				del individual
+
 		print(colored("[DEAP]", "cyan"), "Evolution finished")
 		if self.constraint_order_respected(best):
 			print(colored("[DEAP]", "cyan"), "Best time found equals", best.fitness.values[0])
