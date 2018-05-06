@@ -4,7 +4,7 @@
 
 Dans ce projet, nous considérons un problème d'ordonnancement appelé "Flexible Job Shop". Nous disposons d'un ensemble de $n$ travaux (jobs) devant être exécutés sur $m$ machines. Chaque job se décompose en une liste d'activités qui doivent être réalisées dans l'ordre. Une activité est décrite par un ensemble d'opération de durée et de machine différente et il faut choisir l'opération qui minimise la durée totale que nécessite l'ensemble des jobs pour être terminé.
 
-On supposera que les machines ne peuvent réaliser qu'une opération à la fois bien que la solution que nous proposons dans le cas d'une recherche à l'aide d'une heuristique, les machines peuvent supporter plusieurs opérations en simultané. Dans le cas de l'approche génétique, ce nombre est fixé à une seule opération en simultané.
+On supposera que les machines ne peuvent réaliser qu'une opération à la fois bien que la solution que nous proposons dans le cas d'une recherche à l'aide d'une heuristique, les machines peuvent supporter plusieurs opérations en simultané. Dans le cas de l'approche génétique, ce nombre est fixé à une seule opération en simultané. On suppose également qu'il y a également au moins deux jobs.
 
 \subsection{Structure des jeux de données}
 
@@ -16,6 +16,8 @@ La première ligne représente le nombre de jobs, le nombre de machines et enfin
 \subsection{Structure de notre projet}
 
 Le code des classes se retrouvent dans les fichiers \textit{job.py}, \textit{activity.py}, \textit{operation.py} et \textit{machine.py}. Nous ne rentrerons pas dans le détail de ces derniers, le code étant suffisament explicite.
+
+Afin de pouvoir exécuter notre code, un certain nombre de librairies sont nécessaires. Il faudra installer \textit{deap}, \textit{colorama}, \textit{termcolor}, \textit{more-itertools} et \textit{matplotlib}. Il est recommandé de les installer à l'aide du module \textit{pip}.
 
 \subsubsection{Classe représentant les jobs}
 
