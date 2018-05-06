@@ -132,4 +132,10 @@ On crée ensuite notre population initiale.
 
 \lstinputlisting[firstline=217, lastline=237]{./app/geneticscheduler.py}
 
-On simule l'évolution de la population pour $max\_generation$ générations. Pour ce faire, on calcule la fonction objective de chaque individu
+On simule l'évolution pour $max\_generation$ générations. On définit les probabilités de mutations et de permutation puis on fait évoluer notre population et enfin on évalue la fonction objective de chaque individu. Si un individu à une fonction objectif plus faible que \textit{best}, alors cet individu devient le meilleur individu.
+
+\newpage
+
+\lstinputlisting[firstline=238, lastline=250]{./app/geneticscheduler.py}
+
+On affiche les résultats et on simule le meilleur planning trouvé. On réactive la sortie standard si besoin.

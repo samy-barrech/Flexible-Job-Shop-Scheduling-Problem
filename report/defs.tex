@@ -127,3 +127,25 @@ head=0ex,foot=3ex}
 \end{tcolorbox}
 }
 %%%
+
+\newtoggle{InString}{}% Keep track of if we are within a string
+\togglefalse{InString}% Assume not initally in string
+
+\lstset{
+tabsize=2,
+language=Python,
+breaklines=true,
+postbreak=\mbox{\textcolor{Gray}{$\hookrightarrow$}\space},
+basicstyle=\ttfamily\footnotesize\color{color_text},
+keywordstyle=\bfseries\color{Orange},
+commentstyle=\color{color_comment},
+keywords=[2]{self},
+keywords=[3]{__init__},
+keywords=[4]{None,True,False},
+keywordstyle={[2]\ttfamily\color{Fuchsia}},
+keywordstyle={[3]\ttfamily\color{Plum}},
+keywordstyle={[4]\ttfamily\color{Periwinkle}},
+showstringspaces=false,
+backgroundcolor=\color{color_bg},
+stringstyle=\color{SpringGreen}
+}
