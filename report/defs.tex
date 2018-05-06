@@ -66,20 +66,26 @@ head=0ex,foot=3ex}
 %%%
 % custom titlepage
 \usepackage{eso-pic}
+\makeatletter
 \renewcommand{\maketitle}{
 \begingroup
 \thispagestyle{empty}
 \AddToShipoutPicture*{\put(0,0){\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{Pictures/cover}}}  % Image background
 \centering
-\vspace*{5cm}
+\topskip0pt
+\vspace*{\fill}
 \par\normalfont\fontsize{35}{35}\sffamily\selectfont
-\textbf{Méta-Heuristiques}\\
-{\LARGE Flexible Job Shop Scheduling Problem}\par % Book title
+\textbf{\color{color1}\@title}\\
+{\LARGE \subtitle}\par % Book title
 \vspace*{1cm}
-{\Huge Samy Barrech \\ Jonathan Poncy}\par % Author name
+\begin{spacing}{1.5}
+{\Huge \@author}\par % Author name
+\end{spacing}
+\vspace*{\fill}
 \endgroup
 \clearpage
 }
+\makeatother
 
 %%%
 
