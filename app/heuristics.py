@@ -64,7 +64,7 @@ class Heuristics:
 					list_operations.append((current_activity, operation, critical_ratio))
 					best_candidates.update({operation.id_machine: list_operations})
 
-		# TODO: end that
+	# TODO: end that
 
 	## Creation of Machine assignment and operation sequence lists (need improvement)
 	##

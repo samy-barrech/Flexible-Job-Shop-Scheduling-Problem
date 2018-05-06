@@ -44,7 +44,8 @@ class Job:
 	def activity_is_done(self, activity):
 		if not activity.is_done:
 			raise EnvironmentError("This activity is not done")
-		self.__activities_to_be_done = list(filter(lambda element: element.id_activity != activity.id_activity, self.__activities_to_be_done))
+		self.__activities_to_be_done = list(
+			filter(lambda element: element.id_activity != activity.id_activity, self.__activities_to_be_done))
 		self.__activities_done.append(activity)
 
 	# Return the current activity that need to be processe

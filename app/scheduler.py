@@ -1,5 +1,6 @@
 import sys
 
+
 class Scheduler:
 	def __init__(self, machines, max_operations, jobs):
 		self.__original_stdout = sys.stdout

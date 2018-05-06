@@ -35,7 +35,7 @@ class Activity:
 	# Return if the activity is done
 	@property
 	def is_done(self):
-		return not(self.__operation_done is None)
+		return not (self.__operation_done is None)
 
 	# Return the list of all the operations yet to be done
 	@property
@@ -59,14 +59,16 @@ class Activity:
 	# Allow a machine to say to an activity that it finished an operation
 	def terminate_operation(self, operation):
 		# Remove the operation from the list of the operations yet to be done
-		self.__operations_to_be_done = list(filter(lambda element: element.id_operation != operation.id_operation, self.__operations_to_be_done))
+		self.__operations_to_be_done = list(
+			filter(lambda element: element.id_operation != operation.id_operation, self.__operations_to_be_done))
 		# Append the operation to the list of the operations already done
 		self.__operation_done = operation
 		self.__job.activity_is_done(self)
 
 	@property
 	def shop_time(self):
-		return self.operation_done.duration if self.is_done else max(self.__operations_to_be_done, key=lambda operation: operation.duration)
+		return self.operation_done.duration if self.is_done else max(self.__operations_to_be_done,
+																	 key=lambda operation: operation.duration)
 
 	@property
 	def is_feasible(self):

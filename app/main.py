@@ -13,7 +13,7 @@ import re
 import timeit
 
 # Parser
-#with open(os.path.join(os.getcwd(), "data/Barnes/Text/setb4c9.fjs"), "r") as data:
+# with open(os.path.join(os.getcwd(), "data/Barnes/Text/setb4c9.fjs"), "r") as data:
 with open(os.path.join(os.getcwd(), "data/test.fjs"), "r") as data:
 	total_jobs, total_machines, max_operations = re.findall('\S+', data.readline())
 	number_total_jobs, number_total_machines, number_max_operations = int(total_jobs), int(total_machines), int(

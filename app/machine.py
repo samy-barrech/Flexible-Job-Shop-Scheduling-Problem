@@ -40,6 +40,8 @@ class Machine:
 		self.__current_time += 1
 		for activity, operation in self.__processed_operations:
 			if operation.time + operation.duration <= self.__current_time:
-				self.__processed_operations = list(filter(lambda element: not (element[0].id_job == activity.id_job and element[0].id_activity == activity.id_activity and element[1].id_operation == operation.id_operation), self.__processed_operations))
+				self.__processed_operations = list(filter(lambda element: not (
+						element[0].id_job == activity.id_job and element[0].id_activity == activity.id_activity and
+						element[1].id_operation == operation.id_operation), self.__processed_operations))
 				self.__available_places.append(operation.place_of_arrival)
 				activity.terminate_operation(operation)

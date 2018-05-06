@@ -10,9 +10,10 @@ class Operation:
 
 	# Display the operation nicer
 	def __str__(self):
-		output = "Operation n°" + str(self.__id_operation) + " -> Machine: " + str(self.__id_machine) + ", Duration: " + str(self.__duration)
+		output = "Operation n°" + str(self.__id_operation) + " -> Machine: " + str(
+			self.__id_machine) + ", Duration: " + str(self.__duration)
 
-		if not(self.__time is None):
+		if not (self.__time is None):
 			output += ", Started at time " + str(self.__time)
 
 		return output
@@ -24,7 +25,7 @@ class Operation:
 
 	# Return if an operation is done at time t
 	def is_done(self, t):
-		return not(self.__time is None) and self.__time + self.__duration <= t
+		return not (self.__time is None) and self.__time + self.__duration <= t
 
 	# Return if a machine is already treating the operation
 	@property

@@ -231,7 +231,7 @@ class GeneticScheduler:
 			permutation_probability = random.randint(0, 100)
 
 			# Evolve the population
-			print(colored("[DEAP]", "cyan"), "Evolving to generation", current_generation+1)
+			print(colored("[DEAP]", "cyan"), "Evolving to generation", current_generation + 1)
 			for key, individual in enumerate(population):
 				population[key] = self.evolve_individual(individual, mutation_probability, permutation_probability)
 				del individual
