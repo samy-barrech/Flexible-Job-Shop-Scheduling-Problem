@@ -2,9 +2,46 @@
 
 \subsection{Objectifs de la méthode}
 
-\subsection{Déroulement de l'algorithme}
+Cette méthode permet de trouver une borne supérieure de l'optimum très rapidement. Elle consiste à appliquer une heuristique au moment de choisir quelles opérations les machines vont traiter.
 
-\lstinputlisting[firstline=11, lastline=45]{./app/scheduler.py}
+\subsection{Algorithme du scheduler}
+
+\subsubsection{Instanciation de la classe, paramètres de la méthode et initialisation}
+
+\lstinputlisting[firstline=4, lastline=10]{./app/scheduler.py}
+
+Le constructeur de la classe prend trois paramètres, la liste des machines, le nombre d'opérations en parallèle maximal et la liste des jobs construite avec le parseur. La variable \textit{original\_stdout} permet de supprimer la sortie texte et la rétablir au besoin.
+
+\begin{lstlisting}
+s = Scheduler(machines_list, number_max_operations, jobs_list)
+\end{lstlisting}
+
+Pour démarrer le scheduler, il suffit d'appeler la méthode \textit{run} en passant en paramètre l'heuristique considérée et optionnelement mettre \textit{verbose} à \textit{True} ou \textit{False} en fonction de si l'on veut un affichage ou non.
+\begin{lstlisting}
+s.run(Heuristics.select_first_operation)
+\end{lstlisting}
+
+Lors de cet appel, la méthode \textit{run} va commencer par supprimer la sortie standard si indiqué et initialiser la variable \textit{current\_step} à $0$. Cette variable représente l'instant $t$ auquel le système est. 
+
+\lstinputlisting[firstline=12, lastline=17]{./app/scheduler.py}
+
+\newpage
+
+\subsubsection{Déroulement de l'algorithme}
+
+\lstinputlisting[firstline=20, lastline=38]{./app/scheduler.py}
+
+La variable \textit{best\_candidates} correspond au retour de l'heuristique considérée. Il s'agit d'un dictionnaire associant aux identifiants des machines la liste des opérations (ainsi que l'activité auxquelles elles sont rattachées) qu'elles devraient traiter à l'instant $t$.
+
+La boucle \textit{for} parcourant \textit{best\_candidates.items()} permet d'affecter l'opération sur la bonne machine.
+
+La boucle \textit{for} parcourant \textit{self.\_\_machines} permet de simuler le travail des machines pendant une unité de temps.
+
+\subsubsection{Fin de la méthode \textit{run}}
+
+\lstinputlisting[firstline=40, lastline=47]{./app/scheduler.py}
+
+On affiche la durée totale que le planning prend et on réactive \textit{std\_out} si nécessaire. 
 
 \subsection{Choisir l'opération la plus courte dans une activité comme heuristique}
 

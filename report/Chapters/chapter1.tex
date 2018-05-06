@@ -15,7 +15,7 @@ La première ligne représente le nombre de jobs, le nombre de machines et enfin
 
 \subsection{Structure de notre projet}
 
-Le code des classes se retrouvent dans les fichiers "job.py", "activity.py", "opertion.py" et "machine.py". Nous ne rentrerons pas dans le détail de ces derniers, le code étant suffisament explicite.
+Le code des classes se retrouvent dans les fichiers \textit{job.py}, \textit{activity.py}, \textit{operation.py} et \textit{machine.py}. Nous ne rentrerons pas dans le détail de ces derniers, le code étant suffisament explicite.
 
 \subsubsection{Classe représentant les jobs}
 
@@ -30,3 +30,5 @@ Une activité est composée d'un pointeur vers le job auquel elle est rattachée
 Une opération est décrite par un identifiant, une durée, l'identifiant de la machine qui doit procéder à l'opération, l'instant $t$ où l'opération est commencée, un ordre d'arrivée dans la machine (utile pour dessiner le planning), et d'un booléen pour indiquer si l'opération est en cours de traitement.
 
 \subsubsection{Classe représentant les machines}
+
+Une machine a un identifiant, un booléen pour indiquer son état (travaille ou non), la liste des opérations réalisées par la machine, la liste des opérations en cours, un entier représentant le nombre d'opérations en parallèle maximal, un entier symbolisant l'échelle de temps, et une liste représentats les slots libres de la machine (utile pour dessiner le planning) 
