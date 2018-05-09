@@ -234,6 +234,7 @@ class GeneticScheduler:
 					print(colored("[GENETIC]", "cyan"), "A better individual has been found. New best time = ",
 						  ind.fitness.values[0])
 					best = copy.deepcopy(ind)
+			population = [best for _ in range(total_population)]
 
 		print(colored("[GENETIC]", "cyan"), "Evolution finished")
 		if self.constraint_order_respected(best):
