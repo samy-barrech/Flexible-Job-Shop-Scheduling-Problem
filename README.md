@@ -46,8 +46,8 @@ second row: job 1 has 6 operations, the first operation can be processed by 1 ma
 
 ![Barnes setb4c9 - result with shortest operation available](results/barnes_setb4c9_shortest_operation.png)
 
-**Genetic algorithm:** done in 1196 units of time
+**Genetic algorithm:** done in 1158 units of time
 
-    Population: 10, Max Generation: 400, Total time: 131.09917800000403 seconds
+    Population: 10, Max Generation: 300, Total time: 66.035165 seconds
 
 ![Barnes setb4c9 - result with lgenetic algorithm](results/barnes_setb4c9_genetic.png)
