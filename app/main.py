@@ -108,7 +108,7 @@ while loop:
 			max_generation = 400
 		start = timeit.default_timer()
 		s = GeneticScheduler(temp_machines_list, temp_jobs_list)
-		s.run_deap(total_population=total_population, max_generation=max_generation, verbose=True)
+		s.run_genetic(total_population=total_population, max_generation=max_generation, verbose=True)
 		stop = timeit.default_timer()
 		print("Finished in " + str(stop - start) + " seconds")
 

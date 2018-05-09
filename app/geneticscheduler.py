@@ -198,7 +198,7 @@ class GeneticScheduler:
 			activity.terminate_operation(operation)
 
 	# Run the genetic scheduler
-	def run_deap(self, total_population=10, max_generation=100, verbose=False):
+	def run_genetic(self, total_population=10, max_generation=100, verbose=False):
 		# Disable print if verbose is False
 		if not verbose:
 			sys.stdout = None
