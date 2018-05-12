@@ -48,6 +48,6 @@ second row: job 1 has 6 operations, the first operation can be processed by 1 ma
 
 **Genetic algorithm:** done in 1158 units of time
 
-    Population: 10, Max Generation: 300, Total time: 66.035165 seconds
+    Population: 10, Max Generation: 300, Total time: 17.04063700000006 seconds
 
 ![Barnes setb4c9 - result with lgenetic algorithm](results/barnes_setb4c9_genetic.png)
