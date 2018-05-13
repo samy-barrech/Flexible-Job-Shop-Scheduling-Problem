@@ -1,12 +1,12 @@
 import random
 
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-
 
 class Drawer:
 	@staticmethod
-	def draw(number_machines, max_operations, jobs, filename=None):
+	def draw_schedule(number_machines, max_operations, jobs, filename=None):
+		import matplotlib.pyplot as plt
+		import matplotlib.patches as patches
+
 		# Vertical space between operation
 		vertical_space = 1
 		# Vertical height of an operation

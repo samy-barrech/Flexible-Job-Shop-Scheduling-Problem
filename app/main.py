@@ -13,8 +13,8 @@ import re
 import timeit
 
 # Parser
-with open(os.path.join(os.getcwd(), "data/Barnes/Text/setb4c9.fjs"), "r") as data:
-#with open(os.path.join(os.getcwd(), "data/test.fjs"), "r") as data:
+#with open(os.path.join(os.getcwd(), "data/Barnes/Text/setb4c9.fjs"), "r") as data:
+with open(os.path.join(os.getcwd(), "data/test.fjs"), "r") as data:
 	total_jobs, total_machines, max_operations = re.findall('\S+', data.readline())
 	number_total_jobs, number_total_machines, number_max_operations = int(total_jobs), int(total_machines), int(
 		max_operations)
@@ -84,7 +84,7 @@ while loop:
 				input("Wrong option selection. Enter any key to try again...")
 
 		start = timeit.default_timer()
-		s = Scheduler(machines_list, number_max_operations, temp_jobs_list)
+		s = Scheduler(temp_machines_list, number_max_operations, temp_jobs_list)
 		s.run(heuristic)
 		stop = timeit.default_timer()
 		print("Finished in " + str(stop - start) + " seconds")
@@ -93,7 +93,7 @@ while loop:
 		if draw == "n" or draw == "N":
 			continue
 		else:
-			Drawer.draw(number_total_machines, number_max_operations, temp_jobs_list, filename="output_scheduler.png")
+			Drawer.draw_schedule(number_total_machines, number_max_operations, temp_jobs_list, filename="output_scheduler.png")
 
 	elif choice == "2":
 		string = input("Total population [default=20] ")
@@ -116,7 +116,7 @@ while loop:
 		if draw == "n" or draw == "N":
 			continue
 		else:
-			Drawer.draw(number_total_machines, number_max_operations, temp_jobs_list, filename="output_genetic.png")
+			Drawer.draw_schedule(number_total_machines, number_max_operations, temp_jobs_list, filename="output_genetic.png")
 
 	elif choice == "3":
 		loop = False

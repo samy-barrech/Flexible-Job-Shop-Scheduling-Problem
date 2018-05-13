@@ -45,3 +45,4 @@ class Machine:
 						element[1].id_operation == operation.id_operation), self.__processed_operations))
 				self.__available_places.append(operation.place_of_arrival)
 				activity.terminate_operation(operation)
+				self.__operations_done.append(operation)
