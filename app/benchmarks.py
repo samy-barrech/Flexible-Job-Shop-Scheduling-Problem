@@ -126,7 +126,7 @@ class Benchmarks:
 					"Best time found as a function of population size and max generation", "Population size",
 					"Max generation", "Total time")
 
-		# Plot graph with solution time for Z axis
+		# Plot graph with computation time for Z axis
 		self.plot3d(self.__name + "_benchmarks_generation_with_computation_time",
 					[element[0] for element in benchmarks_population_and_generation],
 					[element[1] for element in benchmarks_population_and_generation],
