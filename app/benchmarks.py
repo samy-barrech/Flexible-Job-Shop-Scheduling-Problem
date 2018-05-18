@@ -134,6 +134,8 @@ class Benchmarks:
 					"Best time found as a function of population size and max generation", "Population size",
 					"Max generation", "Computation time")
 
+		return benchmarks_population_and_generation
+
 	# Run all the benchmarks
 	def run(self):
 		# Run benchmark with constant max generation
