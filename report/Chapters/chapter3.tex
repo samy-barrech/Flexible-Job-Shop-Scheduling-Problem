@@ -2,11 +2,11 @@
 
 \subsection{Que sont les algorithmes génétiques ?}
 
-Les algorithmes génétiques sont des méthodes évolutionnistes qui simulent une évolution naturelle génération après génération où les individus peuvent muter, se croiser ou se reproduire (cloner).
+Les algorithmes génétiques sont des méthodes évolutionnistes qui simulent une évolution naturelle, génération après génération, où les individus peuvent muter, se croiser ou se reproduire (cloner).
 
 Ils permettent, lorsqu'il n'existe pas de méthode exacte (ou que la solution est inconnue), d'obtenir une solution approchée en un temps raisonnable.
 
-Dans ce projet, nous nous basons sur une libraire Python qui s'appelle \textit{Deap}.
+Dans ce projet, nous nous basons sur une librairie Python qui s'appelle \textit{Deap}.
 
 \subsection{Instanciation de la classe et lancement de la méthode}
 
@@ -57,7 +57,7 @@ Cette évaluation repose sur une astuce. Comme les activités sont classées par
 
 \lstinputlisting[firstline=67, lastline=78]{./app/geneticscheduler.py}
 
-On initialise une liste contenant pour chaque activité le temps auxquelles elles commencent (utile pour la simulation finale) et deux dictionnaires, un premier faisant la correspondance entre $machine\_id$ et liste des opérations réalisées par cette mmachine, le deuxième faisant la même chose mais par rapport aux identifiants des jobs.
+On initialise une liste contenant pour chaque activité le temps où elles commencent (utile pour la simulation finale) et deux dictionnaires, un premier faisant la correspondance entre $machine\_id$ et liste des opérations réalisées par cette mmachine, le deuxième faisant la même chose mais par rapport aux identifiants des jobs.
 
 \lstinputlisting[firstline=80, lastline=101]{./app/geneticscheduler.py}
 
