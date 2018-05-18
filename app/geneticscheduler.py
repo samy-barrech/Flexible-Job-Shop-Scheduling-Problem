@@ -33,14 +33,12 @@ class GeneticScheduler:
 
 	# Initialize an individual for the genetic algorithm
 	def init_individual(self, ind_class, size):
-		print(colored("[GENETIC]", "cyan"), "Running the scheduler with an heuristic to get a first solution")
 		temp_jobs_list = copy.deepcopy(self.__jobs)
 		temp_machines_list = copy.deepcopy(self.__machines)
 
 		# Run the scheduler
 		s = Scheduler(temp_machines_list, 1, temp_jobs_list)
-		initial_time = s.run(Heuristics.select_first_operation, verbose=False)
-		print(colored("[GENETIC]", "cyan"), "Initial time the solution take", initial_time)
+		initial_time = s.run(Heuristics.random_operation_choice, verbose=False)
 
 		# Retriving all the activities and the operation done
 		list_activities = []
@@ -57,8 +55,7 @@ class GeneticScheduler:
 
 	# Initialize a population
 	def init_population(self, total_population):
-		individual = self.__toolbox.individual()
-		return [individual for _ in range(total_population)]
+		return [self.__toolbox.individual() for _ in range(total_population)]
 
 	# Compute the time an individual take
 	def compute_time(self, individual):
@@ -172,27 +169,30 @@ class GeneticScheduler:
 																				 individual[considered_index]
 		return individual
 
-	# Evolve an individual TODO: add more methods for more diversity
-	def evolve_individual(self, individual, mutation_probability, permutation_probability):
+	# Move an activity inside the scheduler (different than swapping)
+	def move_individual(self, individual):
+		considered_index = min_index = max_index = 0
+		# Loop until we can make some moves, i.e. when max_index - min_index > 2
+		while max_index - min_index <= 2:
+			considered_index = random.randint(0, len(individual) - 1)
+			min_index, max_index = self.compute_bounds(individual, considered_index)
+		# Loop until we find a different index to move
+		new_index = random.randint(min_index + 1, max_index - 1)
+		while considered_index == new_index:
+			new_index = random.randint(min_index + 1, max_index - 1)
+		# Move the activity inside the scheduler
+		individual.insert(new_index, individual.pop(considered_index))
+		return individual
+
+	def evolve_individual(self, individual, mutation_probability, permutation_probability, move_probability):
 		future_individual = copy.deepcopy(individual)
-		has_mutated = False
 		if random.randint(0, 100) < mutation_probability:
 			future_individual = self.mutate_individual(future_individual)
 		if random.randint(0, 100) < permutation_probability:
 			future_individual = self.permute_individual(future_individual)
+		if random.randint(0, 100) < move_probability:
+			future_individual = self.move_individual(future_individual)
 		return future_individual
-
-	# Simulate the individual with the machines
-	def run_simulation(self, individual):
-		_, list_time = self.compute_time(individual)
-		for key, (individual_activity, individual_operation) in enumerate(individual):
-			activity = self.__jobs[individual_activity.id_job - 1].get_activity(individual_activity.id_activity)
-			operation = activity.get_operation(individual_operation.id_operation)
-			operation.time = list_time[key]
-			operation.place_of_arrival = 0
-			activity.terminate_operation(operation)
-
-	# TODO: add a new evolution method, cut and move
 
 	# Run a tournament between individuals within a population to get some of them
 	@staticmethod
@@ -212,8 +212,19 @@ class GeneticScheduler:
 		del population
 		return new_population
 
+	# Simulate the individual with the machines
+	def run_simulation(self, individual):
+		_, list_time = self.compute_time(individual)
+		for key, (individual_activity, individual_operation) in enumerate(individual):
+			activity = self.__jobs[individual_activity.id_job - 1].get_activity(individual_activity.id_activity)
+			operation = activity.get_operation(individual_operation.id_operation)
+			operation.time = list_time[key]
+			operation.place_of_arrival = 0
+			activity.terminate_operation(operation)
+
 	# Run the genetic scheduler
 	def run_genetic(self, total_population=10, max_generation=100, verbose=False):
+		assert total_population > 0, max_generation > 0
 		# Disable print if verbose is False
 		if not verbose:
 			sys.stdout = None
@@ -236,11 +247,16 @@ class GeneticScheduler:
 			# Generate mutation and permutation probabilities for the next generation
 			mutation_probability = random.randint(0, 100)
 			permutation_probability = random.randint(0, 100)
+			move_probability = random.randint(0, 100)
 			# Evolve the population
 			print(colored("[GENETIC]", "cyan"), "Evolving to generation", current_generation + 1)
-			for key in range(total_population):
+			mutants = [random.randint(0, total_population - 1) for _ in
+					   range(random.randint(1, total_population))]
+			print(colored("[GENETIC]", "cyan"), "For this generation,", len(mutants), "individual(s) will mutate")
+			for key in mutants:
 				individual = population[key]
-				population.append(self.evolve_individual(individual, mutation_probability, permutation_probability))
+				population.append(
+					self.evolve_individual(individual, mutation_probability, permutation_probability, move_probability))
 			# Evaluate the entire population
 			fitnesses = list(map(self.evaluate_individual, population))
 			for ind, fit in zip(population, fitnesses):

@@ -14,7 +14,7 @@ import timeit
 
 # Parser
 with open(os.path.join(os.getcwd(), "data/Barnes/Text/setb4c9.fjs"), "r") as data:
-#with open(os.path.join(os.getcwd(), "data/test.fjs"), "r") as data:
+	# with open(os.path.join(os.getcwd(), "data/test.fjs"), "r") as data:
 	total_jobs, total_machines, max_operations = re.findall('\S+', data.readline())
 	number_total_jobs, number_total_machines, number_max_operations = int(total_jobs), int(total_machines), int(
 		max_operations)
@@ -77,9 +77,12 @@ while loop:
 		while heuristic is None:
 			print("Heuristics availables:")
 			print("\t", "1. When an activity has a multiple choice for the operations, choose the shortest one")
+			print("\t", "2. Assign operations to machines randomly")
 			heuristic_choice = input("Enter your choice [1-1]: ")
 			if heuristic_choice == "1":
 				heuristic = Heuristics.select_first_operation
+			elif heuristic_choice == "2":
+				heuristic = Heuristics.random_operation_choice
 			else:
 				input("Wrong option selection. Enter any key to try again...")
 

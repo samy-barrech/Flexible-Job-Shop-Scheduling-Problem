@@ -11,9 +11,7 @@ class Heuristics:
 			if best_candidates.get(best_operation.id_machine) is None:
 				best_candidates.update({best_operation.id_machine: [(current_activity, best_operation)]})
 			elif len(best_candidates.get(best_operation.id_machine)) < max_operations:
-				list_operations = best_candidates.get(best_operation.id_machine)
-				list_operations.append((current_activity, best_operation))
-				best_candidates.update({best_operation.id_machine: list_operations})
+				best_candidates.get(best_operation.id_machine).append((current_activity, best_operation))
 			else:
 				list_operations = best_candidates.get(best_operation.id_machine)
 
@@ -24,7 +22,6 @@ class Heuristics:
 
 				if len(list_operations) < max_operations:
 					list_operations.append((current_activity, best_operation))
-					best_candidates.update({best_operation.id_machine: list_operations})
 
 		return best_candidates
 
@@ -66,7 +63,26 @@ class Heuristics:
 
 	# TODO: end that
 
-	# TODO: add random decision method to have more diversity in the genetic scheduler
+	# Assign randomly jobs to machine
+	@staticmethod
+	def random_operation_choice(jobs_to_be_done, max_operations, _):
+		import random
+		best_candidates = {}
+		dict_operations = {}
+
+		for job in jobs_to_be_done:
+			current_activity = job.current_activity
+			for operation in current_activity.next_operations:
+				if dict_operations.get(operation.id_machine) is None:
+					dict_operations.update({operation.id_machine: [(current_activity, operation)]})
+				else:
+					dict_operations.get(operation.id_machine).append((current_activity, operation))
+
+		for machine, list_operations in dict_operations.items():
+			best_candidates.update({machine: list(
+				set([list_operations[random.randint(0, len(list_operations) - 1)] for _ in range(max_operations)]))})
+
+		return best_candidates
 
 	## Creation of Machine assignment and operation sequence lists (need improvement)
 	##

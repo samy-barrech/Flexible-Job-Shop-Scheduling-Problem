@@ -27,9 +27,8 @@ class Scheduler:
 			best_candidates = heuristic(self.__jobs_to_be_done, self.__max_operations, current_step)
 			for id_machine, candidates in best_candidates.items():
 				machine = self.__machines[id_machine - 1]
-				for candidate in candidates:
-					if not machine.is_working_at_max_capacity():
-						activity, operation = candidate
+				for activity, operation in candidates:
+					if not (machine.is_working_at_max_capacity() or activity.is_pending):
 						machine.add_operation(activity, operation)
 
 			for machine in self.__machines:

@@ -74,6 +74,10 @@ class Activity:
 	def is_feasible(self):
 		return self.__job.check_if_previous_activity_is_done(self.__id_activity)
 
+	@property
+	def is_pending(self):
+		return len(list(filter(lambda element: element.is_pending, self.__operations_to_be_done))) > 0
+
 	def get_operation(self, id_operation):
 		for operation in self.__operations_to_be_done:
 			if operation.id_operation == id_operation:

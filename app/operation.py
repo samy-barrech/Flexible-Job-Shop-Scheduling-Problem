@@ -67,4 +67,3 @@ class Operation:
 		if value < 0:
 			raise ValueError("Time < 0 is not possible")
 		self.__time = value
-
