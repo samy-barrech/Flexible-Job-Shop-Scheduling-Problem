@@ -1,4 +1,3 @@
 .idea/
 app/__pycache__/
-app/output_genetic.png
-app/output_scheduler.png
+app/*.png

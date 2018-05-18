@@ -38,7 +38,7 @@ class GeneticScheduler:
 
 		# Run the scheduler
 		s = Scheduler(temp_machines_list, 1, temp_jobs_list)
-		initial_time = s.run(Heuristics.random_operation_choice, verbose=False)
+		s.run(Heuristics.random_operation_choice, verbose=False)
 
 		# Retriving all the activities and the operation done
 		list_activities = []
@@ -214,13 +214,14 @@ class GeneticScheduler:
 
 	# Simulate the individual with the machines
 	def run_simulation(self, individual):
-		_, list_time = self.compute_time(individual)
+		total_time, list_time = self.compute_time(individual)
 		for key, (individual_activity, individual_operation) in enumerate(individual):
 			activity = self.__jobs[individual_activity.id_job - 1].get_activity(individual_activity.id_activity)
 			operation = activity.get_operation(individual_operation.id_operation)
 			operation.time = list_time[key]
 			operation.place_of_arrival = 0
 			activity.terminate_operation(operation)
+		return total_time
 
 	# Run the genetic scheduler
 	def run_genetic(self, total_population=10, max_generation=100, verbose=False):
@@ -250,8 +251,8 @@ class GeneticScheduler:
 			move_probability = random.randint(0, 100)
 			# Evolve the population
 			print(colored("[GENETIC]", "cyan"), "Evolving to generation", current_generation + 1)
-			mutants = [random.randint(0, total_population - 1) for _ in
-					   range(random.randint(1, total_population))]
+			mutants = list(set([random.randint(0, total_population - 1) for _ in
+								range(random.randint(1, total_population))]))
 			print(colored("[GENETIC]", "cyan"), "For this generation,", len(mutants), "individual(s) will mutate")
 			for key in mutants:
 				individual = population[key]
@@ -265,15 +266,13 @@ class GeneticScheduler:
 					print(colored("[GENETIC]", "cyan"), "A better individual has been found. New best time = ",
 						  ind.fitness.values[0])
 					best = copy.deepcopy(ind)
-			print(colored("[GENETIC]", "cyan"), "Tournament in progress...")
 			population = self.run_tournament(population, total=total_population)
-			print(colored("[GENETIC]", "cyan"), "Tournament finished")
 
 		print(colored("[GENETIC]", "cyan"), "Evolution finished")
 		if self.constraint_order_respected(best):
 			print(colored("[GENETIC]", "cyan"), "Best time found equals", best.fitness.values[0])
 			print(colored("[GENETIC]", "cyan"), "Simulating work on machines")
-			self.run_simulation(best)
+			total_time = self.run_simulation(best)
 			print(colored("[GENETIC]", "cyan"), "Simulation finished")
 			print(colored("[GENETIC]", "cyan"), "Genetic scheduler finished")
 		else:
@@ -282,3 +281,5 @@ class GeneticScheduler:
 		# Reenable stdout
 		if not verbose:
 			sys.stdout = self.__original_stdout
+
+		return total_time

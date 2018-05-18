@@ -1,63 +1,23 @@
-from job import Job
-from activity import Activity
-from operation import Operation
-from machine import Machine
 from scheduler import Scheduler
 from geneticscheduler import GeneticScheduler
 from heuristics import Heuristics
 from drawer import Drawer
+from customparser import parse
+from benchmarks import Benchmarks
 
-import os
 import copy
-import re
+import sys
 import timeit
 
-# Parser
-with open(os.path.join(os.getcwd(), "data/Barnes/Text/setb4c9.fjs"), "r") as data:
-	# with open(os.path.join(os.getcwd(), "data/test.fjs"), "r") as data:
-	total_jobs, total_machines, max_operations = re.findall('\S+', data.readline())
-	number_total_jobs, number_total_machines, number_max_operations = int(total_jobs), int(total_machines), int(
-		max_operations)
-	jobs_list = []
-	# Current job's id
-	id_job = 1
 
-	for line in data:
-		# Split data with multiple spaces as separator
-		parsed_line = re.findall('\S+', line)
-		# Total number of operations for the job
-		number_total_operations = int(parsed_line[0])
-		# Current job
-		job = Job(id_job)
-		# Current activity's id
-		id_activity = 1
-		# Current item of the parsed line
-		i = 1
-
-		while i < len(parsed_line):
-			# Total number of operations for the activity
-			number_operations = int(parsed_line[i])
-			# Current activity
-			activity = Activity(job, id_activity)
-			for id_operation in range(1, number_operations + 1):
-				activity.add_operation(Operation(id_operation, int(parsed_line[i + 2 * id_operation - 1]),
-												 int(parsed_line[i + 2 * id_operation])))
-
-			job.add_activity(activity)
-			i += 1 + 2 * number_operations
-			id_activity += 1
-
-		jobs_list.append(job)
-		id_job += 1
-
-# Machines
-machines_list = []
-for id_machine in range(1, number_total_machines + 1):
-	machines_list.append(Machine(id_machine, number_max_operations))
+path = "data/test.fjs" if len(sys.argv) == 1 else sys.argv[1]
+jobs_list, machines_list, number_max_operations = parse(path)
+number_total_machines = len(machines_list)
+number_total_jobs = len(jobs_list)
 
 print("Scheduler launched with the following parameters:")
-print('\t', str(number_total_jobs), "jobs")
-print('\t', str(number_total_machines), "machine(s)")
+print('\t', number_total_jobs, "jobs")
+print('\t', number_total_machines, "machine(s)")
 print('\t', "Machine(s) can process", str(number_max_operations), "operation(s) at the same time")
 print("\n")
 
@@ -68,17 +28,18 @@ while loop:
 	print(30 * "-", "MENU", 30 * "-")
 	print("1. Scheduler with an heuristic")
 	print("2. Genetic Scheduler")
-	print("3. Exit")
+	print("3. Benchmarks")
+	print("4. Exit")
 	print(66 * "-")
 
-	choice = input("Enter your choice [1-3]: ")
+	choice = input("Enter your choice [1-4]: ")
 	if choice == "1":
 		heuristic = None
 		while heuristic is None:
 			print("Heuristics availables:")
 			print("\t", "1. When an activity has a multiple choice for the operations, choose the shortest one")
 			print("\t", "2. Assign operations to machines randomly")
-			heuristic_choice = input("Enter your choice [1-1]: ")
+			heuristic_choice = input("Enter your choice [1-2]: ")
 			if heuristic_choice == "1":
 				heuristic = Heuristics.select_first_operation
 			elif heuristic_choice == "2":
@@ -124,6 +85,10 @@ while loop:
 								 filename="output_genetic.png")
 
 	elif choice == "3":
+		b = Benchmarks(path)
+		b.run()
+
+	elif choice == "4":
 		loop = False
 	else:
 		input("Wrong option selection. Enter any key to try again...")
