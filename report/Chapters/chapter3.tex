@@ -34,7 +34,7 @@ Le \textit{scheduler} est ensuite appelé sur les listes temporaires précédemm
 
 \lstinputlisting[firstline=49, lastline=55]{./app/geneticscheduler.py}
 
-Comme l'opération a été réalisée sur des listes temporaires, il est nécessaire de faire la correspondance des activités et des opérations sur les listes initiales, les objets étant différents. Les couples \textit{activity} et \textit{operation} sont ensuite stockées dans une liste avec le temps auquel l'opération est commencée afin de pouvoir trier cette liste pour respecter la contrainte d'ordre.
+Comme l'opération a été réalisée sur des listes temporaires, il est nécessaire de faire la correspondance des activités et des opérations sur les listes initiales, les objets étant différents. Les couples \textit{activity} et \textit{operation} sont ensuite stockées dans une liste avec le temps auquel l'opération commence afin de pouvoir trier cette liste pour respecter la contrainte d'ordre.
 
 \lstinputlisting[firstline=56, lastline=60]{./app/geneticscheduler.py}
 
@@ -57,7 +57,7 @@ Cette évaluation repose sur une astuce. Comme les activités sont classées par
 
 \lstinputlisting[firstline=67, lastline=78]{./app/geneticscheduler.py}
 
-On initialise une liste contenant pour chaque activité le temps auxquelles elles commencent (utile pour la simulation finale) et deux dictionnaires, un premier faisant la correspondance entre $machine\_id$ et liste des opérations réalisées par cette mmachine, le deuxième faisant la même chose mais par rapport aux identifiants des jobs.
+On initialise une liste contenant pour chaque activité le temps auxquel elles commencent (utile pour la simulation finale) et deux dictionnaires, un premier faisant la correspondance entre $machine\_id$ et liste des opérations réalisées par cette mmachine, le deuxième faisant la même chose mais par rapport aux identifiants des jobs.
 
 \lstinputlisting[firstline=80, lastline=101]{./app/geneticscheduler.py}
 
@@ -132,7 +132,7 @@ On crée ensuite notre population initiale.
 
 \lstinputlisting[firstline=217, lastline=237]{./app/geneticscheduler.py}
 
-On simule l'évolution pour $max\_generation$ générations. On définit les probabilités de mutations et de permutation puis on fait évoluer notre population et enfin on évalue la fonction objective de chaque individu. Si un individu à une fonction objectif plus faible que \textit{best}, alors cet individu devient le meilleur individu. De plus, pour augmenter l'efficacité de notre algorithme vers la convergence de l'optimum, nous avons décidé de remplacer la population actuelle par une population composée uniquement du meilleur individu.
+On simule l'évolution pour $max\_generation$ générations. On définit les probabilités de mutations et de permutation puis on fait évoluer notre population et enfin on évalue la fonction objectif de chaque individu. Si un individu a une fonction objectif plus faible que \textit{best}, alors cet individu devient le meilleur individu. De plus, pour augmenter l'efficacité de notre algorithme vers la convergence de l'optimum, nous avons décidé de remplacer la population actuelle par une population composée uniquement du meilleur individu.
 
 \newpage
 
