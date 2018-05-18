@@ -176,7 +176,7 @@ class GeneticScheduler:
 		while max_index - min_index <= 2:
 			considered_index = random.randint(0, len(individual) - 1)
 			min_index, max_index = self.compute_bounds(individual, considered_index)
-		# Loop until we find a different index to move
+		# Loop until we find a different index to move to
 		new_index = random.randint(min_index + 1, max_index - 1)
 		while considered_index == new_index:
 			new_index = random.randint(min_index + 1, max_index - 1)
