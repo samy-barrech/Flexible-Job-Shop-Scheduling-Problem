@@ -72,7 +72,7 @@ class Benchmarks:
 
 		return benchmarks_population
 
-	# Benchmarks the genetic scheduler when we increase total population
+	# Benchmarks the genetic scheduler when we increase max generation
 	def generation(self):
 		benchmarks_generation = []
 
@@ -97,17 +97,41 @@ class Benchmarks:
 
 		return benchmarks_generation
 
-	def run(self):
-		benchmarks_population = self.population()
-		self.plot3d(self.__name + "_benchmarks_population_with_time", [element[0] for element in benchmarks_population],
-					[element[1] for element in benchmarks_population],
-					[element[3] for element in benchmarks_population],
+	# Benchmarks the genetic scheduler for different couples of population size and max generation
+	def population_and_generation(self):
+		import itertools
+		benchmarks_population_and_generation = []
+		params = itertools.product(self.__size, repeat=2)
+		print(colored("[BENCHMARKS]", "yellow"),
+			  "Gathering times for different couples of population size and max generation")
+		for population, generation in params:
+			print(colored("[BENCHMARKS]", "yellow"), "Current population size =", population, ", max generation =",
+				  generation)
+			start = timeit.default_timer()
+			temp_machines_list, temp_jobs_list = copy.deepcopy(self.__machines_list), copy.deepcopy(
+				self.__jobs_list)
+			s = GeneticScheduler(temp_machines_list, temp_jobs_list)
+			total_time = s.run_genetic(total_population=population, max_generation=generation, verbose=False)
+			stop = timeit.default_timer()
+			print(colored("[BENCHMARKS]", "yellow"), "Done in", stop - start, "seconds")
+			benchmarks_population_and_generation.append((population, generation, stop - start, total_time))
+			del temp_machines_list, temp_jobs_list
+		print(colored("[BENCHMARKS]", "yellow"), "Gathering for different couples completed")
+
+		self.plot3d(self.__name + "_benchmarks_generation_with_time",
+					[element[0] for element in benchmarks_population_and_generation],
+					[element[1] for element in benchmarks_population_and_generation],
+					[element[3] for element in benchmarks_population_and_generation],
 					"Best time found as a function of population size and max generation", "Population size",
 					"Max generation", "Total time")
 
-		benchmarks_generation = self.generation()
-		self.plot3d(self.__name + "_benchmarks_generation_with_time", [element[0] for element in benchmarks_generation],
-					[element[1] for element in benchmarks_generation],
-					[element[3] for element in benchmarks_generation],
-					"Best time found as a function of population size and max generation", "Population size",
-					"Max generation", "Total time")
+	# Run all the benchmarks
+	def run(self):
+		# Run benchmark with constant max generation
+		self.population()
+
+		# Run benchmark with constant population size
+		self.generation()
+
+		# Run benchmark with changing population size and max generation
+		self.population_and_generation()
