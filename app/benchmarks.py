@@ -12,7 +12,7 @@ import timeit
 class Benchmarks:
 	def __init__(self, path):
 		init()  # Init colorama for color display
-		self.__size = list(set(np.logspace(0, 2, num=10, dtype=np.int)))
+		self.__size = list(set(np.logspace(0, 3, num=10, dtype=np.int)))
 		self.__name = path.split('/')[-1].split('.')[0]
 		self.__jobs_list, self.__machines_list, self.__number_max_operations = parse(path)
 
@@ -97,8 +97,6 @@ class Benchmarks:
 
 		return benchmarks_generation
 
-	# Benchmarks 3d
-
 	def run(self):
 		benchmarks_population = self.population()
 		self.plot3d(self.__name + "_benchmarks_population_with_time", [element[0] for element in benchmarks_population],
@@ -106,4 +104,10 @@ class Benchmarks:
 					[element[3] for element in benchmarks_population],
 					"Best time found as a function of population size and max generation", "Population size",
 					"Max generation", "Total time")
-# benchmarks_generation = self.generation()
+
+		benchmarks_generation = self.generation()
+		self.plot3d(self.__name + "_benchmarks_generation_with_time", [element[0] for element in benchmarks_generation],
+					[element[1] for element in benchmarks_generation],
+					[element[3] for element in benchmarks_generation],
+					"Best time found as a function of population size and max generation", "Population size",
+					"Max generation", "Total time")
