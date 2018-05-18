@@ -66,6 +66,8 @@ class Heuristics:
 
 	# TODO: end that
 
+	# TODO: add random decision method to have more diversity in the genetic scheduler
+
 	## Creation of Machine assignment and operation sequence lists (need improvement)
 	##
 	@staticmethod
