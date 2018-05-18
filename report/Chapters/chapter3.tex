@@ -24,60 +24,63 @@ Pour lancer l'algorithme, la métode \textit{run\_genetic} prend comme paramètr
 
 \subsection{Création d'un individu}
 
-\lstinputlisting[firstline=38, lastline=42]{./app/geneticscheduler.py}
+\lstinputlisting[firstline=35, lastline=37]{./app/geneticscheduler.py}
 
-Afin de trouver un individu initial, nous réalisons une copie profonde de la liste des jobs et des machines. En effet, ces dernières seront modifiées par le \textit{scheduler} de la partie précédente ce qui empêcherait toute autre simulation par la suite.
+Afin de trouver un individu initial, nous réalisons une copie profonde de la liste des jobs et des machines. En effet, ces dernières seront modifiées par le \textit{scheduler} de la partie précédente ce qui empêcherait toute autre simulation par la suite. 
 
-\lstinputlisting[firstline=44, lastline=47]{./app/geneticscheduler.py}
+\lstinputlisting[firstline=39, lastline=41]{./app/geneticscheduler.py}
 
-Le \textit{scheduler} est ensuite appelé sur les listes temporaires précédemment créer.
+Le \textit{scheduler} est ensuite appelé sur les listes temporaires précédemment créer en utilisant une heuristique de choix aléatoire pour les opérations afin d'augmenter la diversité de la population et éviter de converger vers un optimum local.
 
-\lstinputlisting[firstline=49, lastline=55]{./app/geneticscheduler.py}
+\lstinputlisting[firstline=43, lastline=49]{./app/geneticscheduler.py}
 
 Comme l'opération a été réalisée sur des listes temporaires, il est nécessaire de faire la correspondance des activités et des opérations sur les listes initiales, les objets étant différents. Les couples \textit{activity} et \textit{operation} sont ensuite stockées dans une liste avec le temps auquel l'opération commence afin de pouvoir trier cette liste pour respecter la contrainte d'ordre.
 
-\lstinputlisting[firstline=56, lastline=60]{./app/geneticscheduler.py}
+\lstinputlisting[firstline=50, lastline=54]{./app/geneticscheduler.py}
 
 La liste est donc triée par rapport au temps, puis on supprime cette composante de la liste pour créer notre individu. Les variables temporaires sont détruites et l'individu retourné.
 
 \subsection{Création de la population initiale}
 
-\lstinputlisting[firstline=62, lastline=65]{./app/geneticscheduler.py}
+\lstinputlisting[firstline=56, lastline=58]{./app/geneticscheduler.py}
 
-Notre population initiale correspond à $total\_population$ éléments. Chaque élement correspond à l'individu retourné par la méthode \textit{init\_individual}.
+Notre population initiale correspond à $total\_population$ éléments. Chaque élement correspond à un individu retourné par la méthode \textit{init\_individual}.
 
 \subsection{Evaluation de la fonction objectif d'un individu}
 
-\lstinputlisting[firstline=114, lastline=115]{./app/geneticscheduler.py}
+\lstinputlisting[firstline=107, lastline=108]{./app/geneticscheduler.py}
 
 L'évaluation d'un individu est très simple. Comme nous souhaitons minimiser le temps total que mettent les jobs, l'évaluation correspond logiquement au temps que met l'individu pour terminer. Cette évaluation fait donc appel à la méthode \textit{compute\_time}. 
-\newpage
 
 Cette évaluation repose sur une astuce. Comme les activités sont classées par ordre chronologique, il suffit de regarder à quel instant $t_1$ termine l'activité précédente du job et à quel instant $t_2$ termine la dernière activité sur la machine concernée par l'opération couramment considérée. Il suffit ensuite de prendre le max entre $t_1$ et $t_2$ pour avoir l'instant $t$ auquel l'activité commence.
 
-\lstinputlisting[firstline=67, lastline=78]{./app/geneticscheduler.py}
+\newpage
 
-On initialise une liste contenant pour chaque activité le temps auxquel elles commencent (utile pour la simulation finale) et deux dictionnaires, un premier faisant la correspondance entre $machine\_id$ et liste des opérations réalisées par cette mmachine, le deuxième faisant la même chose mais par rapport aux identifiants des jobs.
+\lstinputlisting[firstline=61, lastline=71]{./app/geneticscheduler.py}
 
-\lstinputlisting[firstline=80, lastline=101]{./app/geneticscheduler.py}
+On initialise une liste contenant pour chaque activité le temps auquel elles commencent (utile pour la simulation finale) et deux dictionnaires, un premier faisant la correspondance entre $machine\_id$ et liste des opérations réalisées par cette mmachine, le deuxième faisant la même chose mais par rapport aux identifiants des jobs.
+
+\lstinputlisting[firstline=73, lastline=94]{./app/geneticscheduler.py}
 
 On calcule ensuite les instants de temps comme indiqué précédemment.
 
-\lstinputlisting[firstline=103, lastline=111]{./app/geneticscheduler.py}
+\newpage
+
+\lstinputlisting[firstline=96, lastline=104]{./app/geneticscheduler.py}
 
 Pour calculer le temps total que prend le planning, on regarde pour chaque machine le moment où la dernière opération commence ainsi que sa durée et on prend la somme maximale. Enfin, on renvoie la durée totale et la liste des instants temporels.
 
 \subsection{Mutation d'un individu}
 
-\lstinputlisting[firstline=120, lastline=123]{./app/geneticscheduler.py}
+\lstinputlisting[firstline=113, lastline=115]{./app/geneticscheduler.py}
 
-Pour réaliser la mutation d'un individu, on commence par faire une copie profonde de ce dernier et on regarde les activités qui peuvent muter, autrement dit celles où plusieurs opérations sont possibles pour les réaliser.
+Pour réaliser la mutation d'un individu, on regarde les activités qui peuvent muter, autrement dit celles où plusieurs opérations sont possibles pour les réaliser.
 
-\lstinputlisting[firstline=124, lastline=132]{./app/geneticscheduler.py}
+\lstinputlisting[firstline=117, lastline=124]{./app/geneticscheduler.py}
 
 S'il existe de telles activités, on en choisit une au hasard, et pour cette activité on choisit une opération différente. 
 
-\lstinputlisting[firstline=133, lastline=136]{./app/geneticscheduler.py}
+\lstinputlisting[firstline=125, lastline=128]{./app/geneticscheduler.py}
 
 On supprime la composante \textit{fitness} (qui correspond à la fonction objective) car sa valeur n'est plus à jour et on renvoie le mutant.
 
@@ -94,23 +97,29 @@ Exemple de planning en identifiant les activités par \textit{(id\_job, id\_acti
 
 Par exemple, la première permutation est valide car elle respecte la contrainte d'ordre. Cependant, pour la deuxième, la contrainte d'ordre ne serait plus respectée car si j'échange le $(1,1)$ et le $(2,2)$, alors on aurait $(2,2)$ avant $(2,1)$ ce qui est impossible, de même avec $(1,1)$ et $(1,2)$. 
 
-\lstinputlisting[firstline=143, lastline=155]{./app/geneticscheduler.py}
+\lstinputlisting[firstline=135, lastline=147]{./app/geneticscheduler.py}
 
 \newpage
 
 Cette méthode permet de calculer les bornes min et max de permutation pour une activité donnée, autrement dit l'intervalle où l'on peut déplacer une activité sans que cela viole la contrainte d'ordre.
 
-\lstinputlisting[firstline=157, lastline=179]{./app/geneticscheduler.py}
+\lstinputlisting[firstline=149, lastline=170]{./app/geneticscheduler.py}
 
-On réalise dans un premier temps une copie profonde de l'individu. Ensuite, tant que l'on a pas trouvé une permutation possible, on sélectionne deux activités au hasard et on vérifie si elles sont permutables, c'est à dire si chacune appartient au domaine de permutation de l'autre. Une fois cette permutation trouvée, elle est effectuée et le nouvel individu est renvoyé.
+Tant que l'on a pas trouvé une permutation possible, on sélectionne deux activités au hasard et on vérifie si elles sont permutables, c'est à dire si chacune appartient au domaine de permutation de l'autre. Une fois cette permutation trouvée, elle est effectuée et le nouvel individu est renvoyé.
 
-Il est a noté qu'une permutation est forcément possible à partir du moment où le nombre de jobs est au moins égal à deux.
+Il est à noter qu'une permutation est forcément possible à partir du moment où le nombre de jobs est au moins égal à deux.
 
 \newpage
 
-\subsection{Evolution d'un individu}
+\subsection{Déplacement d'une activité au sein d'un individu}
 
-\lstinputlisting[firstline=182, lastline=188]{./app/geneticscheduler.py}
+\lstinputlisting[firstline=173, lastline=185]{./app/geneticscheduler.py}
+
+Plutôt que de permuter deux activités, il est également possible de choisir une activité, de calculer ses bornes de déplacements valides et de la déplacer dans cette intervalle. Cette opération diffère de la permutation dans le sens où l'ordre des autres éléments n'est pas modifié.
+
+\subsection{Évolution d'un individu}
+
+\lstinputlisting[firstline=187, lastline=195]{./app/geneticscheduler.py}
 
 Un individu donné peut muté, subir une permutation, ou les deux. On calcule pour cela deux probabilités, une par opération possible. Bien que par construction ces opérations respectent forcément la contrainte d'ordre, on effectue une vérification sur le futur individu.
 
