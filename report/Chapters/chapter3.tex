@@ -99,9 +99,9 @@ Par exemple, la première permutation est valide car elle respecte la contrainte
 
 \lstinputlisting[firstline=135, lastline=147]{./app/geneticscheduler.py}
 
-\newpage
-
 Cette méthode permet de calculer les bornes min et max de permutation pour une activité donnée, autrement dit l'intervalle où l'on peut déplacer une activité sans que cela viole la contrainte d'ordre.
+
+\newpage
 
 \lstinputlisting[firstline=149, lastline=170]{./app/geneticscheduler.py}
 
@@ -121,30 +121,40 @@ Plutôt que de permuter deux activités, il est également possible de choisir u
 
 \lstinputlisting[firstline=187, lastline=195]{./app/geneticscheduler.py}
 
-Un individu donné peut muté, subir une permutation, ou les deux. On calcule pour cela deux probabilités, une par opération possible. Bien que par construction ces opérations respectent forcément la contrainte d'ordre, on effectue une vérification sur le futur individu.
+Un individu donné peut muter, subir une permutation, subir un déplacement ou une combinaison de ces opérations. On calcule pour cela trois probabilités, une par opération possible. 
 
-\subsection{Simulation sur les machines d'un individu}
+\subsection{Réduction d'une population par tournoi}
 
-\lstinputlisting[firstline=190, lastline=198]{./app/geneticscheduler.py}
-
-Pour un individu donné, on simule son exécution afin de pouvoir le dessiner éventuellement.
-
-\subsection{Déroulement de l'algorithme}
-
-\lstinputlisting[firstline=201, lastline=212]{./app/geneticscheduler.py}
-
-Lors de l'appel de la méthode \textit{run\_genetic}, on commence par désactiver la sortie standard si demandé puis on initialise la libraire \textit{Deap}. On indique que l'on chercher à minimiser la fonction objectif. On enregistre également auprès de \textit{Deap} nos fonctions de création, de mutation, de permutation et d'évolution.
-
-\lstinputlisting[firstline=214, lastline=215]{./app/geneticscheduler.py}
-
-On crée ensuite notre population initiale.
-
-\lstinputlisting[firstline=217, lastline=237]{./app/geneticscheduler.py}
-
-On simule l'évolution pour $max\_generation$ générations. On définit les probabilités de mutations et de permutation puis on fait évoluer notre population et enfin on évalue la fonction objectif de chaque individu. Si un individu a une fonction objectif plus faible que \textit{best}, alors cet individu devient le meilleur individu. De plus, pour augmenter l'efficacité de notre algorithme vers la convergence de l'optimum, nous avons décidé de remplacer la population actuelle par une population composée uniquement du meilleur individu.
+Lors du passage de la génération $n$ à $n+1$, les individus résultant d'une évolution sont ajoutés à la liste contenant la population. On se retrouve dans une situation de surpeuplement car la taille de cette liste dépasse $total\_population$. Les individus vont donc participer à un tournoi jusqu'à retrouver une taille de population acceptable.
 
 \newpage
 
-\lstinputlisting[firstline=239, lastline=251]{./app/geneticscheduler.py}
+\lstinputlisting[firstline=199, lastline=213]{./app/geneticscheduler.py}
+
+Pour cela, on choisit aléatoirement deux individus de cette population. Celui dont la fonction objective est la plus faible remporte le tournoi et est ajouté à la liste des survivants (représentée par \textit{new\_population}). Cette opération va se répéter jusqu'à ce que la taille de la population de survivants soit égale à $total$.
+
+\subsection{Simulation sur les machines d'un individu}
+
+\lstinputlisting[firstline=216, lastline=224]{./app/geneticscheduler.py}
+
+Pour un individu donné, on simule son exécution afin de pouvoir le dessiner éventuellement.
+
+\newpage
+
+\subsection{Déroulement de l'algorithme}
+
+\lstinputlisting[firstline=227, lastline=239]{./app/geneticscheduler.py}
+
+Lors de l'appel de la méthode \textit{run\_genetic}, on commence par désactiver la sortie standard si demandé puis on initialise la libraire \textit{Deap}. On indique que l'on chercher à minimiser la fonction objectif. On enregistre également auprès de \textit{Deap} nos fonctions de création, de mutation, de permutation et d'évolution.
+
+\lstinputlisting[firstline=241, lastline=242]{./app/geneticscheduler.py}
+
+On crée ensuite notre population initiale.
+
+\lstinputlisting[firstline=244, lastline=269]{./app/geneticscheduler.py}
+
+On simule l'évolution pour $max\_generation$ générations. On définit les probabilités de mutations, de permutation et de déplacement puis on fait évoluer notre population et enfin on évalue la fonction objectif de chaque individu. Si un individu a une fonction objectif plus faible que \textit{best}, alors cet individu devient le meilleur individu. 
+
+\lstinputlisting[firstline=271, lastline=285]{./app/geneticscheduler.py}
 
 On affiche les résultats et on simule le meilleur planning trouvé. On réactive la sortie standard si besoin.
