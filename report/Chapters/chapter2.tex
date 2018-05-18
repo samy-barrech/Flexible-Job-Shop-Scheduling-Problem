@@ -39,7 +39,7 @@ La boucle \textit{for} parcourant \textit{self.\_\_machines} permet de simuler l
 
 \subsubsection{Fin de la méthode \textit{run}}
 
-\lstinputlisting[firstline=44, lastline=50]{./app/scheduler.py}
+\lstinputlisting[firstline=43, lastline=50]{./app/scheduler.py}
 
 On affiche la durée totale que le planning prend et on réactive \textit{std\_out} si nécessaire. 
 
@@ -51,7 +51,7 @@ On affiche la durée totale que le planning prend et on réactive \textit{std\_o
 
 Lors de l'appel de cette heuristique, le paramètre de temps n'est pas utile, d'où la wild card utilisée et on commence par initialiser le dictionnaire \textit{best\_candidates}.
 
-\lstinputlisting[firstline=7, lastline=27]{./app/heuristics.py}
+\lstinputlisting[firstline=7, lastline=24]{./app/heuristics.py}
 
 Ensuite, pour chaque job qu'il reste à faire, on récupère l'activité en cours. Ici, on considère que la meilleure opération à choisir est celle qui a la durée la plus courte. On met à jour le dictionnaire en fonction de son état :
 \begin{itemize}
@@ -60,6 +60,6 @@ Ensuite, pour chaque job qu'il reste à faire, on récupère l'activité en cour
     \item Si la machine travaille à capacité maximale, on regarde s'il existe une opération de durée supérieure à celle calculée précédemment et si c'est le cas, on la remplace.
 \end{itemize}
 
-\lstinputlisting[firstline=29, lastline=29]{./app/heuristics.py}
+\lstinputlisting[firstline=26, lastline=26]{./app/heuristics.py}
 
 Enfin, on renvoie le dictionnaire calculé.
