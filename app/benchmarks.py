@@ -131,7 +131,7 @@ class Benchmarks:
 					[element[0] for element in benchmarks_population_and_generation],
 					[element[1] for element in benchmarks_population_and_generation],
 					[element[2] for element in benchmarks_population_and_generation],
-					"Best time found as a function of population size and max generation", "Population size",
+					"Computation time as a function of population size and max generation", "Population size",
 					"Max generation", "Computation time")
 
 		return benchmarks_population_and_generation
