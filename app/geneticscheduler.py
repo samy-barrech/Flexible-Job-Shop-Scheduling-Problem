@@ -1,13 +1,9 @@
 import copy
-import itertools
 import sys
 import random
 
-import multiprocessing
-
 from deap import base
 from deap import creator
-from deap import tools
 
 from scheduler import Scheduler
 from heuristics import Heuristics
@@ -118,22 +114,21 @@ class GeneticScheduler:
 	# In our case it means select another operation within an activity with multiple choices for an operation
 	@staticmethod
 	def mutate_individual(individual):
-		mutant = copy.deepcopy(individual)
 		# Select the possible candidates, meaning the activities with multiple choices for an operation
-		candidates = list(filter(lambda element: len(element[0].next_operations) > 1, mutant))
+		candidates = list(filter(lambda element: len(element[0].next_operations) > 1, individual))
 		# If some candidates have been found, mutate a random one
 		if len(candidates) > 0:
 			mutant_activity, previous_operation = candidates[random.randint(0, len(candidates) - 1)]
-			id_mutant_activity = [element[0] for element in mutant].index(mutant_activity)
+			id_mutant_activity = [element[0] for element in individual].index(mutant_activity)
 			mutant_operation = previous_operation
 			while mutant_operation.id_operation == previous_operation.id_operation:
 				mutant_operation = mutant_activity.next_operations[
 					random.randint(0, len(mutant_activity.next_operations) - 1)]
-			mutant[id_mutant_activity] = (mutant_activity, mutant_operation)
+			individual[id_mutant_activity] = (mutant_activity, mutant_operation)
 		# Remove the previous fitness value because it is deprecated
-		del mutant.fitness.values
+		del individual.fitness.values
 		# Return the mutant
-		return mutant
+		return individual
 
 	# Permute an individual
 	# In our case it means select an activity and permute it with another
@@ -155,37 +150,37 @@ class GeneticScheduler:
 		return min_index, max_index
 
 	def permute_individual(self, individual):
-		permutation = copy.deepcopy(individual)
 		permutation_possible = False
 		considered_index = considered_permutation_index = 0
 		while not permutation_possible:
 			considered_index = min_index = max_index = 0
 			# Loop until we can make some moves, i.e. when max_index - min_index > 2
 			while max_index - min_index <= 2:
-				considered_index = random.randint(0, len(permutation) - 1)
-				min_index, max_index = self.compute_bounds(permutation, considered_index)
+				considered_index = random.randint(0, len(individual) - 1)
+				min_index, max_index = self.compute_bounds(individual, considered_index)
 
 			# Select a random activity within those bounds (excluded) to permute with
 			considered_permutation_index = random.randint(min_index + 1, max_index - 1)
-			min_index_permutation, max_index_permutation = self.compute_bounds(permutation,
+			min_index_permutation, max_index_permutation = self.compute_bounds(individual,
 																			   considered_permutation_index)
 			if min_index_permutation < considered_index < max_index_permutation:
 				permutation_possible = considered_index != considered_permutation_index
 
 		# A possible permutation has been found
-		permutation[considered_index], permutation[considered_permutation_index] = permutation[
-																					   considered_permutation_index], \
-																				   permutation[considered_index]
-		return permutation
+		individual[considered_index], individual[considered_permutation_index] = individual[
+																					 considered_permutation_index], \
+																				 individual[considered_index]
+		return individual
 
-	# Evolve an individual
+	# Evolve an individual TODO: add more methods for more diversity
 	def evolve_individual(self, individual, mutation_probability, permutation_probability):
-		future_individual = individual
+		future_individual = copy.deepcopy(individual)
+		has_mutated = False
 		if random.randint(0, 100) < mutation_probability:
 			future_individual = self.mutate_individual(future_individual)
 		if random.randint(0, 100) < permutation_probability:
 			future_individual = self.permute_individual(future_individual)
-		return future_individual if self.constraint_order_respected(future_individual) else individual
+		return future_individual
 
 	# Simulate the individual with the machines
 	def run_simulation(self, individual):
@@ -196,6 +191,26 @@ class GeneticScheduler:
 			operation.time = list_time[key]
 			operation.place_of_arrival = 0
 			activity.terminate_operation(operation)
+
+	# TODO: add a new evolution method, cut and move
+
+	# Run a tournament between individuals within a population to get some of them
+	@staticmethod
+	def run_tournament(population, total=10):
+		# Because you can't have a bigger population as a result of the tournament, we assert that constraint
+		assert total <= len(population)
+		new_population = []
+		while len(new_population) < total:
+			first_individual = population[random.randint(0, len(population) - 1)]
+			second_individual = population[random.randint(0, len(population) - 1)]
+			if first_individual.fitness.values[0] < second_individual.fitness.values[0]:
+				new_population.append(first_individual)
+				population.remove(first_individual)
+			else:
+				new_population.append(second_individual)
+				population.remove(second_individual)
+		del population
+		return new_population
 
 	# Run the genetic scheduler
 	def run_genetic(self, total_population=10, max_generation=100, verbose=False):
@@ -223,9 +238,9 @@ class GeneticScheduler:
 			permutation_probability = random.randint(0, 100)
 			# Evolve the population
 			print(colored("[GENETIC]", "cyan"), "Evolving to generation", current_generation + 1)
-			for key, individual in enumerate(population):
-				population[key] = self.evolve_individual(individual, mutation_probability, permutation_probability)
-				del individual
+			for key in range(total_population):
+				individual = population[key]
+				population.append(self.evolve_individual(individual, mutation_probability, permutation_probability))
 			# Evaluate the entire population
 			fitnesses = list(map(self.evaluate_individual, population))
 			for ind, fit in zip(population, fitnesses):
@@ -234,7 +249,9 @@ class GeneticScheduler:
 					print(colored("[GENETIC]", "cyan"), "A better individual has been found. New best time = ",
 						  ind.fitness.values[0])
 					best = copy.deepcopy(ind)
-			population = [best for _ in range(total_population)]
+			print(colored("[GENETIC]", "cyan"), "Tournament in progress...")
+			population = self.run_tournament(population, total=total_population)
+			print(colored("[GENETIC]", "cyan"), "Tournament finished")
 
 		print(colored("[GENETIC]", "cyan"), "Evolution finished")
 		if self.constraint_order_respected(best):
