@@ -17,7 +17,13 @@ La première ligne représente le nombre de jobs, le nombre de machines et enfin
 
 Le code des classes se retrouvent dans les fichiers \textit{job.py}, \textit{activity.py}, \textit{operation.py} et \textit{machine.py}. Nous ne rentrerons pas dans le détail de ces derniers, le code étant suffisament explicite.
 
-Afin de pouvoir exécuter notre code, un certain nombre de librairies sont nécessaires. Il faudra installer \textit{deap}, \textit{colorama}, \textit{termcolor}, \textit{more-itertools} et \textit{matplotlib}. Il est recommandé de les installer à l'aide du module \textit{pip}.
+Afin de pouvoir exécuter notre code, un certain nombre de librairies sont nécessaires. Il faudra installer \textit{deap}, \textit{colorama}, \textit{termcolor}, \textit{more-itertools}, \textit{numpy} et \textit{matplotlib}. Il est recommandé de les installer à l'aide du module \textit{pip}.
+
+\newpage
+
+\subsubsection{Parsing des fichiers de données}
+
+\lstinputlisting[firstline=10, lastline=50]{./app/customparser.py}
 
 \subsubsection{Classe représentant les jobs}
 
