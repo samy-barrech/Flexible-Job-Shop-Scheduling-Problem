@@ -34,7 +34,7 @@ Le \textit{scheduler} est ensuite appelé sur les listes temporaires précédemm
 
 \lstinputlisting[firstline=43, lastline=49]{./app/geneticscheduler.py}
 
-Comme l'opération a été réalisée sur des listes temporaires, il est nécessaire de faire la correspondance des activités et des opérations sur les listes initiales, les objets étant différents. Les couples \textit{activity} et \textit{operation} sont ensuite stockées dans une liste avec le temps auquel l'opération commence afin de pouvoir trier cette liste pour respecter la contrainte d'ordre.
+Comme l'opération a été réalisée sur des listes temporaires, il est nécessaire de faire la correspondance des activités et des opérations sur les listes initiales, les objets étant différents. Les couples \textit{activity} et \textit{operation} sont ensuite stockés dans une liste avec le temps auquel l'opération commence afin de pouvoir trier cette liste pour respecter la contrainte d'ordre.
 
 \lstinputlisting[firstline=50, lastline=54]{./app/geneticscheduler.py}
 
@@ -44,7 +44,7 @@ La liste est donc triée par rapport au temps, puis on supprime cette composante
 
 \lstinputlisting[firstline=56, lastline=58]{./app/geneticscheduler.py}
 
-Notre population initiale correspond à $total\_population$ éléments. Chaque élement correspond à un individu retourné par la méthode \textit{init\_individual}.
+Notre population initiale correspond à $total\_population$ éléments. Chaque élément correspond à un individu retourné par la méthode \textit{init\_individual}.
 
 \subsection{Evaluation de la fonction objectif d'un individu}
 
@@ -115,7 +115,7 @@ Il est à noter qu'une permutation est forcément possible à partir du moment o
 
 \lstinputlisting[firstline=173, lastline=185]{./app/geneticscheduler.py}
 
-Plutôt que de permuter deux activités, il est également possible de choisir une activité, de calculer ses bornes de déplacements valides et de la déplacer dans cette intervalle. Cette opération diffère de la permutation dans le sens où l'ordre des autres éléments n'est pas modifié.
+Plutôt que de permuter deux activités, il est également possible de choisir une activité, de calculer ses bornes de déplacements valides et de la déplacer dans cet intervalle. Cette opération diffère de la permutation dans le sens où l'ordre des autres éléments n'est pas modifié.
 
 \subsection{Évolution d'un individu}
 
@@ -145,7 +145,7 @@ Pour un individu donné, on simule son exécution afin de pouvoir le dessiner é
 
 \lstinputlisting[firstline=227, lastline=239]{./app/geneticscheduler.py}
 
-Lors de l'appel de la méthode \textit{run\_genetic}, on commence par désactiver la sortie standard si demandé puis on initialise la libraire \textit{Deap}. On indique que l'on chercher à minimiser la fonction objectif. On enregistre également auprès de \textit{Deap} nos fonctions de création, de mutation, de permutation et d'évolution.
+Lors de l'appel de la méthode \textit{run\_genetic}, on commence par désactiver la sortie standard si demandé puis on initialise la libraire \textit{Deap}. On indique que l'on cherche à minimiser la fonction objectif. On enregistre également auprès de \textit{Deap} nos fonctions de création, de mutation, de permutation et d'évolution.
 
 \lstinputlisting[firstline=241, lastline=242]{./app/geneticscheduler.py}
 
@@ -153,7 +153,7 @@ On crée ensuite notre population initiale.
 
 \lstinputlisting[firstline=244, lastline=269]{./app/geneticscheduler.py}
 
-On simule l'évolution pour $max\_generation$ générations. On définit les probabilités de mutations, de permutation et de déplacement puis on fait évoluer notre population et enfin on évalue la fonction objectif de chaque individu. Si un individu a une fonction objectif plus faible que \textit{best}, alors cet individu devient le meilleur individu. 
+On simule l'évolution pour $max\_generation$ générations. On définit les probabilités de mutation, de permutation et de déplacement puis on fait évoluer notre population et enfin on évalue la fonction objectif de chaque individu. Si un individu a une fonction objectif plus faible que \textit{best}, alors cet individu devient le meilleur individu. 
 
 \lstinputlisting[firstline=271, lastline=285]{./app/geneticscheduler.py}
 
