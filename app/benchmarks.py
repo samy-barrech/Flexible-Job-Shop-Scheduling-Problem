@@ -13,7 +13,7 @@ import timeit
 class Benchmarks:
 	def __init__(self, path):
 		init()  # Init colorama for color display
-		self.__size = list(set(np.logspace(0, 2, num=10, dtype=np.int)))
+		self.__size = list(set(np.logspace(0, 3.5, num=20, dtype=np.int)))
 		self.__name = path.split('/')[-1].split('.')[0]
 		self.__jobs_list, self.__machines_list, self.__number_max_operations = parse(path)
 
@@ -31,7 +31,7 @@ class Benchmarks:
 			stop = timeit.default_timer()
 			print(colored("[BENCHMARKS]", "yellow"), "Done in", stop - start, "seconds")
 			benchmarks_population.append((size, 100, stop - start, total_time))
-			del temp_machines_list, temp_jobs_list
+			del s, temp_machines_list, temp_jobs_list
 		print(colored("[BENCHMARKS]", "yellow"), "Gathering for different population sizes completed")
 
 		Drawer.plot2d(self.__name + "_benchmarks_population", [element[0] for element in benchmarks_population],
@@ -56,7 +56,7 @@ class Benchmarks:
 			stop = timeit.default_timer()
 			print(colored("[BENCHMARKS]", "yellow"), "Done in", stop - start, "seconds")
 			benchmarks_generation.append((100, size, stop - start, total_time))
-			del temp_machines_list, temp_jobs_list
+			del s, temp_machines_list, temp_jobs_list
 		print(colored("[BENCHMARKS]", "yellow"), "Gathering for different population sizes completed")
 
 		Drawer.plot2d(self.__name + "_benchmarks_generation", [element[1] for element in benchmarks_generation],
@@ -80,15 +80,15 @@ class Benchmarks:
 			temp_machines_list, temp_jobs_list = copy.deepcopy(self.__machines_list), copy.deepcopy(
 				self.__jobs_list)
 			s = GeneticScheduler(temp_machines_list, temp_jobs_list)
-			total_time = s.run_genetic(total_population=population, max_generation=generation, verbose=False)
+			total_time = s.run_genetic(total_population=population, max_generation=generation, verbose=True)
 			stop = timeit.default_timer()
 			print(colored("[BENCHMARKS]", "yellow"), "Done in", stop - start, "seconds")
 			benchmarks_population_and_generation.append((population, generation, stop - start, total_time))
-			del temp_machines_list, temp_jobs_list
+			del s, temp_machines_list, temp_jobs_list
 		print(colored("[BENCHMARKS]", "yellow"), "Gathering for different couples completed")
 
 		# Plot graph with solution time as Z axis
-		self.plot3d(self.__name + "_benchmarks_generation_with_solution_time",
+		Drawer.plot3d(self.__name + "_benchmarks_generation_with_solution_time",
 					[element[0] for element in benchmarks_population_and_generation],
 					[element[1] for element in benchmarks_population_and_generation],
 					[element[3] for element in benchmarks_population_and_generation],
@@ -96,7 +96,7 @@ class Benchmarks:
 					"Max generation", "Total time")
 
 		# Plot graph with computation time as Z axis
-		self.plot3d(self.__name + "_benchmarks_generation_with_computation_time",
+		Drawer.plot3d(self.__name + "_benchmarks_generation_with_computation_time",
 					[element[0] for element in benchmarks_population_and_generation],
 					[element[1] for element in benchmarks_population_and_generation],
 					[element[2] for element in benchmarks_population_and_generation],

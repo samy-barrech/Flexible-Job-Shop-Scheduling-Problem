@@ -5,8 +5,7 @@ from customparser import parse
 from colorama import init
 from termcolor import colored
 
-from os import walk
-
+import os
 import copy
 
 
@@ -20,9 +19,9 @@ class EvaluateSolutions:
 		results = {}
 		print(colored("[EVALUATION]", "red"), "Population size =", population_size, "& Max generation =",
 			  max_generation)
-		for (path, _, filenames) in walk(self.__path):
+		for (path, _, filenames) in os.walk(self.__path):
 			for filename in filenames:
-				jobs_list, machines_list, _ = parse(path + filename)
+				jobs_list, machines_list, _ = parse(os.path.join(path, filename))
 				print(colored("[EVALUATION]", "red"), "Running evaluation for", filename)
 				time_results = []
 				for i in range(1, 6):
