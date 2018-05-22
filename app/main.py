@@ -4,11 +4,11 @@ from heuristics import Heuristics
 from drawer import Drawer
 from customparser import parse
 from benchmarks import Benchmarks
+from evaluatesolutions import EvaluateSolutions
 
 import copy
 import sys
 import timeit
-
 
 path = "data/test.fjs" if len(sys.argv) == 1 else sys.argv[1]
 jobs_list, machines_list, number_max_operations = parse(path)
@@ -29,10 +29,11 @@ while loop:
 	print("1. Scheduler with an heuristic")
 	print("2. Genetic Scheduler")
 	print("3. Benchmarks")
+	print("4. Run an evaluation of the solutions")
 	print("4. Exit")
 	print(66 * "-")
 
-	choice = input("Enter your choice [1-4]: ")
+	choice = input("Enter your choice [1-5]: ")
 	if choice == "1":
 		heuristic = None
 		while heuristic is None:
@@ -59,7 +60,7 @@ while loop:
 		else:
 			Drawer.draw_schedule(number_total_machines, number_max_operations, temp_jobs_list,
 								 filename="output_scheduler.png")
-
+		del s
 	elif choice == "2":
 		string = input("Total population [default=20] ")
 		try:
@@ -83,12 +84,16 @@ while loop:
 		else:
 			Drawer.draw_schedule(number_total_machines, number_max_operations, temp_jobs_list,
 								 filename="output_genetic.png")
-
+		del s
 	elif choice == "3":
 		b = Benchmarks(path)
 		b.run()
 
 	elif choice == "4":
+		e = EvaluateSolutions("data/Dauzere_Data/Text/")
+		e.run()
+
+	elif choice == "5":
 		loop = False
 	else:
 		input("Wrong option selection. Enter any key to try again...")

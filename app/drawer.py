@@ -73,3 +73,35 @@ class Drawer:
 		# Saving the scheduler order
 		if not (filename is None):
 			plt.savefig(filename, bbox_inches='tight')
+
+	# Plot a 2d graph
+	@staticmethod
+	def plot2d(filename, xdata, ydata, title, xlabel, ylabel):
+		import matplotlib.pyplot as plt
+		plt.clf()
+		plot = plt.subplot()
+		plot.set_title(title)
+		plot.set_xlabel(xlabel)
+		plot.set_ylabel(ylabel)
+		plot.plot(xdata, ydata)
+		plot.autoscale()
+		plt.show()
+		plt.savefig(filename, bbox_inches='tight')
+
+	# Plot a 3d graph
+	@staticmethod
+	def plot3d(filename, xdata, ydata, zdata, title, xlabel, ylabel, zlabel):
+		from mpl_toolkits.mplot3d import Axes3D
+		import matplotlib.pyplot as plt
+
+		plt.clf()
+		fig = plt.figure()
+		plot = fig.gca(projection='3d')
+		plot.set_title(title)
+		plot.set_xlabel(xlabel)
+		plot.set_ylabel(ylabel)
+		plot.set_zlabel(zlabel)
+		plot.scatter(xdata, ydata, zdata, c='b', marker='o')
+		plot.autoscale()
+		plt.show()
+		plt.savefig(filename, bbox_inches='tight')
