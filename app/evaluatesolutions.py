@@ -21,7 +21,6 @@ class EvaluateSolutions:
 		print(colored("[EVALUATION]", "red"), "Population size =", population_size, "& Max generation =",
 			  max_generation)
 		for (path, _, filenames) in walk(self.__path):
-			print(filenames)
 			for filename in filenames:
 				jobs_list, machines_list, _ = parse(path + filename)
 				print(colored("[EVALUATION]", "red"), "Running evaluation for", filename)

@@ -1,4 +1,5 @@
 import random
+import os
 
 
 class Drawer:
@@ -72,7 +73,7 @@ class Drawer:
 		plt.show()
 		# Saving the scheduler order
 		if not (filename is None):
-			plt.savefig(filename, bbox_inches='tight')
+			plt.savefig(os.path.join("output", filename), bbox_inches='tight')
 
 	# Plot a 2d graph
 	@staticmethod
@@ -86,7 +87,8 @@ class Drawer:
 		plot.plot(xdata, ydata)
 		plot.autoscale()
 		plt.show()
-		plt.savefig(filename, bbox_inches='tight')
+		if not (filename is None):
+			plt.savefig(os.path.join("output", filename), bbox_inches='tight')
 
 	# Plot a 3d graph
 	@staticmethod
@@ -104,4 +106,5 @@ class Drawer:
 		plot.scatter(xdata, ydata, zdata, c='b', marker='o')
 		plot.autoscale()
 		plt.show()
-		plt.savefig(filename, bbox_inches='tight')
+		if not (filename is None):
+			plt.savefig(os.path.join("output", filename), bbox_inches='tight')

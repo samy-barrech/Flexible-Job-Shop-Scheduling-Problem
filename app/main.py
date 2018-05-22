@@ -7,8 +7,10 @@ from benchmarks import Benchmarks
 from evaluatesolutions import EvaluateSolutions
 
 import copy
+import os
 import sys
 import timeit
+
 
 path = "data/test.fjs" if len(sys.argv) == 1 else sys.argv[1]
 jobs_list, machines_list, number_max_operations = parse(path)
@@ -30,7 +32,7 @@ while loop:
 	print("2. Genetic Scheduler")
 	print("3. Benchmarks")
 	print("4. Run an evaluation of the solutions")
-	print("4. Exit")
+	print("5. Exit")
 	print(66 * "-")
 
 	choice = input("Enter your choice [1-5]: ")
@@ -82,17 +84,41 @@ while loop:
 		if draw == "n" or draw == "N":
 			continue
 		else:
-			Drawer.draw_schedule(number_total_machines, number_max_operations, temp_jobs_list,
-								 filename="output_genetic.png")
+			Drawer.draw_schedule(number_total_machines, 1, temp_jobs_list, filename="output_genetic.png")
 		del s
 	elif choice == "3":
 		b = Benchmarks(path)
 		b.run()
-
+		del b
 	elif choice == "4":
-		e = EvaluateSolutions("data/Dauzere_Data/Text/")
+		path_data_set = None
+		while path_data_set is None:
+			print("Data set availables:")
+			print("\t", "1. Barnes")
+			print("\t", "2. Dauzere")
+			print("\t", "3. Hurink - edata")
+			print("\t", "4. Hurink - rdata")
+			print("\t", "5. Hurink - sdata")
+			print("\t", "6. Hurink - vdata")
+			data_set_choice = input("Enter your choice [1-6]: ")
+			if data_set_choice == "1":
+				path_data_set = os.path.join("data", "Barnes", "Text")
+			elif data_set_choice == "2":
+				path_data_set = os.path.join("data", "Dauzere_Data", "Text")
+			elif data_set_choice == "3":
+				path_data_set = os.path.join("data", "Hurink_Data", "Text", "edata")
+			elif data_set_choice == "4":
+				path_data_set = os.path.join("data", "Hurink_Data", "Text", "rdata")
+			elif data_set_choice == "5":
+				path_data_set = os.path.join("data", "Hurink_Data", "Text", "sdata")
+			elif data_set_choice == "6":
+				path_data_set = os.path.join("data", "Hurink_Data", "Text", "vdata")
+			else:
+				input("Wrong option selection. Enter any key to try again...")
+		print(os.path.dirname(__file__))
+		e = EvaluateSolutions(path_data_set)
 		e.run()
-
+		del e
 	elif choice == "5":
 		loop = False
 	else:
