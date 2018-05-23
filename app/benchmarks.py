@@ -13,7 +13,7 @@ import timeit
 class Benchmarks:
 	def __init__(self, path):
 		init()  # Init colorama for color display
-		self.__size = list(set(np.logspace(0, 3.5, num=20, dtype=np.int)))
+		self.__size = list(set(np.logspace(0, 4, num=20, dtype=np.int)))
 		self.__name = path.split('/')[-1].split('.')[0]
 		self.__jobs_list, self.__machines_list, self.__number_max_operations = parse(path)
 
@@ -37,7 +37,7 @@ class Benchmarks:
 		Drawer.plot2d(self.__name + "_benchmarks_population", [element[0] for element in benchmarks_population],
 					[element[2] for element in benchmarks_population],
 					"Time as a function of population size for " + self.__name + " (100 generations)",
-					"Population size", "Time (in seconds)")
+					"Population size", "Time (in seconds)", approximate=True)
 
 		return benchmarks_population
 
@@ -80,7 +80,7 @@ class Benchmarks:
 			temp_machines_list, temp_jobs_list = copy.deepcopy(self.__machines_list), copy.deepcopy(
 				self.__jobs_list)
 			s = GeneticScheduler(temp_machines_list, temp_jobs_list)
-			total_time = s.run_genetic(total_population=population, max_generation=generation, verbose=True)
+			total_time = s.run_genetic(total_population=population, max_generation=generation, verbose=False)
 			stop = timeit.default_timer()
 			print(colored("[BENCHMARKS]", "yellow"), "Done in", stop - start, "seconds")
 			benchmarks_population_and_generation.append((population, generation, stop - start, total_time))

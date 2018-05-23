@@ -77,14 +77,60 @@ class Drawer:
 
 	# Plot a 2d graph
 	@staticmethod
-	def plot2d(filename, xdata, ydata, title, xlabel, ylabel):
+	def plot2d(filename, xdata, ydata, title, xlabel, ylabel, approximate=False, min_degree=2, max_degree=8):
 		import matplotlib.pyplot as plt
 		plt.clf()
 		plot = plt.subplot()
 		plot.set_title(title)
 		plot.set_xlabel(xlabel)
 		plot.set_ylabel(ylabel)
-		plot.plot(xdata, ydata)
+		plot.plot(xdata, ydata, 'o' if approximate else '-')
+		
+		if approximate:
+			import numpy as np
+			from scipy.interpolate import UnivariateSpline
+			from colorama import init
+			from termcolor import colored
+			init()
+			
+			# Compute an interval of 150 points
+			x = np.linspace(0, xdata[-1], 150)
+			
+			# Compute a spline to measure the error between the approximation and the data set
+			spline = UnivariateSpline(xdata, ydata)
+			y_spline = spline(x)
+			plot.plot(x, y_spline, 'C0')
+			
+			# Compute different polynomial approximations
+			legends = ["Original data", "Spline approximation"]
+			# Save best polynomial approximation
+			best_degree = best_coefficients = best_residual = best_y_poly = None
+			
+			# Computing different polynomial approximations
+			for degree in range(min_degree, max_degree + 1):
+				# Find a polynomial to fit the spline
+				coefficients = np.polyfit(xdata, ydata, degree)
+				poly = np.poly1d(coefficients)
+				y_poly = poly(x)
+				# Compute the residual (the error)
+				residual = np.linalg.norm(y_spline - y_poly, 2)
+				# Display current polynomial approximation residual
+				print(colored("[DRAWER]", "magenta"), "Polynomial approximation of degree", str(degree),
+					  "-> Residual = ", residual)
+				# Checking if it's a better approximation
+				if best_residual is None or residual < best_residual:
+					best_degree, best_coefficients, best_residual, best_y_poly = degree, coefficients, residual, y_poly
+					
+			# Displaying best polynomial found
+			legends.append("Approximation of degree " + str(best_degree))
+			print(colored("[DRAWER]", "magenta"), "Best approximation found is a polynomial of degree",
+				  str(best_degree))
+			print("\t", "Coefficients:", best_coefficients)
+			print("\t", "Residual:", best_residual)
+			# Plotting resulting polynomial
+			plot.plot(x, best_y_poly, '--')
+			plot.legend(legends)
+			
 		plot.autoscale()
 		plt.show()
 		if not (filename is None):

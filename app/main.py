@@ -10,7 +10,10 @@ import copy
 import os
 import sys
 import timeit
+import warnings
 
+
+warnings.simplefilter('ignore', RuntimeWarning)
 
 path = "data/test.fjs" if len(sys.argv) == 1 else sys.argv[1]
 jobs_list, machines_list, number_max_operations = parse(path)
