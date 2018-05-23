@@ -98,23 +98,26 @@ while loop:
 		while path_data_set is None:
 			print("Data set availables:")
 			print("\t", "1. Barnes")
-			print("\t", "2. Dauzere")
-			print("\t", "3. Hurink - edata")
-			print("\t", "4. Hurink - rdata")
-			print("\t", "5. Hurink - sdata")
-			print("\t", "6. Hurink - vdata")
-			data_set_choice = input("Enter your choice [1-6]: ")
+			print("\t", "2. Brandimarte")
+			print("\t", "3. Dauzere")
+			print("\t", "4. Hurink - edata")
+			print("\t", "5. Hurink - rdata")
+			print("\t", "6. Hurink - sdata")
+			print("\t", "7. Hurink - vdata")
+			data_set_choice = input("Enter your choice [1-7]: ")
 			if data_set_choice == "1":
 				path_data_set = os.path.join("data", "Barnes", "Text")
 			elif data_set_choice == "2":
-				path_data_set = os.path.join("data", "Dauzere_Data", "Text")
+				path_data_set = os.path.join("data", "Brandimarte_Data", "Text")	
 			elif data_set_choice == "3":
-				path_data_set = os.path.join("data", "Hurink_Data", "Text", "edata")
+				path_data_set = os.path.join("data", "Dauzere_Data", "Text")
 			elif data_set_choice == "4":
-				path_data_set = os.path.join("data", "Hurink_Data", "Text", "rdata")
+				path_data_set = os.path.join("data", "Hurink_Data", "Text", "edata")
 			elif data_set_choice == "5":
-				path_data_set = os.path.join("data", "Hurink_Data", "Text", "sdata")
+				path_data_set = os.path.join("data", "Hurink_Data", "Text", "rdata")
 			elif data_set_choice == "6":
+				path_data_set = os.path.join("data", "Hurink_Data", "Text", "sdata")
+			elif data_set_choice == "7":
 				path_data_set = os.path.join("data", "Hurink_Data", "Text", "vdata")
 			else:
 				input("Wrong option selection. Enter any key to try again...")

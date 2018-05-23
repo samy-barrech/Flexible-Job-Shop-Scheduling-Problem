@@ -94,7 +94,7 @@ class Drawer:
 			init()
 			
 			# Compute an interval of 150 points
-			x = np.linspace(0, xdata[-1], 150)
+			x = np.linspace(xdata[0], xdata[-1], 150)
 			
 			# Compute a spline to measure the error between the approximation and the data set
 			spline = UnivariateSpline(xdata, ydata)
@@ -116,7 +116,7 @@ class Drawer:
 				residual = np.linalg.norm(y_spline - y_poly, 2)
 				# Display current polynomial approximation residual
 				print(colored("[DRAWER]", "magenta"), "Polynomial approximation of degree", str(degree),
-					  "-> Residual = ", residual)
+					  "-> Residual =", residual)
 				# Checking if it's a better approximation
 				if best_residual is None or residual < best_residual:
 					best_degree, best_coefficients, best_residual, best_y_poly = degree, coefficients, residual, y_poly

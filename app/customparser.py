@@ -16,7 +16,9 @@ def parse(path):
 		# Current job's id
 		id_job = 1
 
-		for line in data:
+		for key, line in enumerate(data):
+			if key >= number_total_jobs:
+				break
 			# Split data with multiple spaces as separator
 			parsed_line = re.findall('\S+', line)
 			# Current job
