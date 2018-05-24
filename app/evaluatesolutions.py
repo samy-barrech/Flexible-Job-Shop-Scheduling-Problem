@@ -16,7 +16,7 @@ class EvaluateSolutions:
 		self.__path = path
 		self.__files_list = {}
 
-	def run(self, population_size=200, max_generation=500):
+	def run(self, population_size=500, max_generation=1000):
 		results = {}
 		print(colored("[EVALUATION]", "red"), "Population size =", population_size, "& Max generation =",
 			  max_generation)
@@ -32,7 +32,7 @@ class EvaluateSolutions:
 						jobs_list)
 					start = timeit.default_timer()	
 					s = GeneticScheduler(temp_machines_list, temp_jobs_list)
-					time = s.run_genetic(total_population=population_size, max_generation=max_generation, verbose=True)
+					time = s.run_genetic(total_population=population_size, max_generation=max_generation, verbose=False)
 					stop = timeit.default_timer()
 					print(colored("[EVALUATION]", "red"), "Done in", time, "units of time,", stop - start, "seconds")
 					time_results.append(time)
