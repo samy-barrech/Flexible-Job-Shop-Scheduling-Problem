@@ -11,14 +11,14 @@ import timeit
 
 
 class Benchmarks:
-	def __init__(self, path):
+	def __init__(self, path, start=0, stop=4, samples=20):
 		init()  # Init colorama for color display
-		self.__size = list(set(np.logspace(0, 4, num=20, dtype=np.int)))
+		self.__size = list(set(np.logspace(start, stop, num=samples, dtype=np.int)))
 		self.__name = path.split('/')[-1].split('.')[0]
 		self.__jobs_list, self.__machines_list, self.__number_max_operations = parse(path)
 
 	# Benchmarks the genetic scheduler when we increase total population
-	def population(self):
+	def population(self, max_generation=100):
 		benchmarks_population = []
 
 		print(colored("[BENCHMARKS]", "yellow"), "Gathering computation time for different population sizes")
@@ -27,22 +27,22 @@ class Benchmarks:
 			start = timeit.default_timer()
 			temp_machines_list, temp_jobs_list = copy.deepcopy(self.__machines_list), copy.deepcopy(self.__jobs_list)
 			s = GeneticScheduler(temp_machines_list, temp_jobs_list)
-			total_time = s.run_genetic(total_population=size, max_generation=100, verbose=False)
+			total_time = s.run_genetic(total_population=size, max_generation=max_generation, verbose=False)
 			stop = timeit.default_timer()
 			print(colored("[BENCHMARKS]", "yellow"), "Done in", stop - start, "seconds")
-			benchmarks_population.append((size, 100, stop - start, total_time))
+			benchmarks_population.append((size, max_generation, stop - start, total_time))
 			del s, temp_machines_list, temp_jobs_list
 		print(colored("[BENCHMARKS]", "yellow"), "Gathering for different population sizes completed")
 
 		Drawer.plot2d(self.__name + "_benchmarks_population", [element[0] for element in benchmarks_population],
-					[element[2] for element in benchmarks_population],
-					"Time as a function of population size for " + self.__name + " (100 generations)",
-					"Population size", "Time (in seconds)", approximate=True)
+					  [element[2] for element in benchmarks_population],
+					  "Time as a function of population size for " + self.__name + " (" + str(
+						  max_generation) + " generations)", "Population size", "Time (in seconds)", approximate=True)
 
 		return benchmarks_population
 
 	# Benchmarks the genetic scheduler when we increase max generation
-	def generation(self):
+	def generation(self, population_size=100):
 		benchmarks_generation = []
 
 		print(colored("[BENCHMARKS]", "yellow"), "Gathering computation time for different generation numbers")
@@ -52,17 +52,17 @@ class Benchmarks:
 			temp_machines_list, temp_jobs_list = copy.deepcopy(self.__machines_list), copy.deepcopy(
 				self.__jobs_list)
 			s = GeneticScheduler(temp_machines_list, temp_jobs_list)
-			total_time = s.run_genetic(total_population=100, max_generation=size, verbose=False)
+			total_time = s.run_genetic(total_population=population_size, max_generation=size, verbose=False)
 			stop = timeit.default_timer()
 			print(colored("[BENCHMARKS]", "yellow"), "Done in", stop - start, "seconds")
-			benchmarks_generation.append((100, size, stop - start, total_time))
+			benchmarks_generation.append((population_size, size, stop - start, total_time))
 			del s, temp_machines_list, temp_jobs_list
 		print(colored("[BENCHMARKS]", "yellow"), "Gathering for different population sizes completed")
 
 		Drawer.plot2d(self.__name + "_benchmarks_generation", [element[1] for element in benchmarks_generation],
-					[element[2] for element in benchmarks_generation],
-					"Time as a function of max generation for " + self.__name + " (100 individuals)", "Max generation",
-					"Time (in seconds)")
+					  [element[2] for element in benchmarks_generation],
+					  "Time as a function of max generation for " + self.__name + " (" + str(
+						  population_size) + " individuals)", "Max generation", "Time (in seconds)")
 
 		return benchmarks_generation
 
@@ -89,19 +89,19 @@ class Benchmarks:
 
 		# Plot graph with solution time as Z axis
 		Drawer.plot3d(self.__name + "_benchmarks_generation_with_solution_time",
-					[element[0] for element in benchmarks_population_and_generation],
-					[element[1] for element in benchmarks_population_and_generation],
-					[element[3] for element in benchmarks_population_and_generation],
-					"Best time found as a function of population size and max generation", "Population size",
-					"Max generation", "Total time")
+					  [element[0] for element in benchmarks_population_and_generation],
+					  [element[1] for element in benchmarks_population_and_generation],
+					  [element[3] for element in benchmarks_population_and_generation],
+					  "Best time found as a function of population size and max generation", "Population size",
+					  "Max generation", "Total time")
 
 		# Plot graph with computation time as Z axis
 		Drawer.plot3d(self.__name + "_benchmarks_generation_with_computation_time",
-					[element[0] for element in benchmarks_population_and_generation],
-					[element[1] for element in benchmarks_population_and_generation],
-					[element[2] for element in benchmarks_population_and_generation],
-					"Computation time as a function of population size and max generation", "Population size",
-					"Max generation", "Computation time")
+					  [element[0] for element in benchmarks_population_and_generation],
+					  [element[1] for element in benchmarks_population_and_generation],
+					  [element[2] for element in benchmarks_population_and_generation],
+					  "Computation time as a function of population size and max generation", "Population size",
+					  "Max generation", "Computation time")
 
 		return benchmarks_population_and_generation
 

@@ -46,4 +46,5 @@ class EvaluateSolutions:
 
 			print(colored("[EVALUATION]", "red"), "Resulting average time for files in", self.__path)
 			for filename, (average_time, computation_time) in results.items():
-				print("\t", filename, " - Average time =", average_time, " for an average computation time of", computation_time, "seconds")
+				print("\t", filename, "- Average time =", average_time, "for an average computation time of",
+					  computation_time, "seconds")
