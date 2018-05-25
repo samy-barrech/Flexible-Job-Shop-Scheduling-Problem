@@ -6,6 +6,34 @@ Le fichier de données considéré correspond au \textit{Barnes - setb4c9}. En e
 
 Le code servant à réaliser les benchmarks est disponible dans le fichier \textit{benchmarks.py}.
 
+\subsection{Principe de benchmarking}
+
+\subsubsection{Instanciation de la classe}
+
+\lstinputlisting[firstline=13, lastline=18]{./app/benchmarks.py}
+
+On crée une liste de $samples$ valeurs entre $start$ et $stop$ espacées de façon logarithmique. Ceci permet d'otenir beaucoup de valuers faibles et moins de valeurs importantes ce qui est intéressant pour comparer la fonction objective pour différents couples taille de population et génération maximale par la suite.
+
+\subsubsection{Benchmarks en fonction de la taille de la population}
+
+\lstinputlisting[firstline=20, lastline=42]{./app/benchmarks.py}
+
+Cette fonction permet d'étudier la complexité temporelle en fonction de la taille des populations à génération maximale fixée (ici 100 par défaut).
+
+On notera la présence du paramètre \textit{approximate} lors de l'appel à \textit{Drawer.plot2d} qui permettra d'approximer la courbe obtenue. Les raisons seront données dans la suite de ce rapport.
+
+\subsubsection{Benchmarks en fonction de la génération maximale}
+
+\lstinputlisting[firstline=44, lastline=67]{./app/benchmarks.py}
+
+Cette fonction permet d'étudier la complexité temporelle en fonction de la génération maximale à taille de population fixée (ici 100 par défaut).
+
+\subsubsection{Benchmarks en fonction  de la taille de la population et de la génération maximale}
+
+\lstinputlisting[firstline=69, lastline=106]{./app/benchmarks.py}
+
+Cette fonction permet d'étudier la complexité temporelle en fonction de la taille des populations et de la génération maximale mais aussi l'évolution de la fonction objective du meilleur individu en fonction de ces mêmes paramètres.
+
 \subsection{Comparaison du temps d'exécution par rapport à la taille de la population}
 
 La génération maximale est ici fixée à $100$. Nous faisons évoluer la taille de la population de façon logarithmique entre $1$ et $10000$.
