@@ -12,42 +12,6 @@ Nous avons décidé de confronter notre algorithme aux résultats connus pour le
 
 Les temps moyens d'exécution sont donnés en secondes.
 
-\subsubsection{Résultats de notre algorithme pour une population de 10 individus et une génération maximale de 100}
-
-\begin{table}[!h]
-    \renewcommand{\arraystretch}{1.5}
-    \centering
-    \begin{tabular}{p{\textwidth/7} c c c c c}
-        Instance & $n \times m$ & LB & UB & Temps moyen & Temps d'exécution moyen \\
-         \hline
-        Mk01 & $10 \times 6$ & \textbf{40} & \textbf{40} & 48.8 & 1.19 \\
-         \hline
-        Mk02 & $10 \times 6$ & \textbf{26} & \textbf{26} & 45.2 & 1.57 \\
-         \hline
-        Mk03 & $15 \times 8$ & \textbf{204} & \textbf{204} & 252.8 & 3.04 \\
-         \hline
-        Mk04 & $15 \times 8$ & \textbf{60} & \textbf{60} & 81.4 & 1.47 \\
-         \hline
-        Mk05 & $15 \times 4$ & \textbf{172} & \textbf{172} & 197.2 & 1.63 \\
-         \hline
-        Mk06 & $10 \times 15$ & \textbf{57} & \textbf{57} & 127.6 & 3.17 \\
-         \hline
-        Mk07 & $20 \times 5$ & \textbf{139} & \textbf{139} & 206.2 & 2.10 \\
-         \hline
-        Mk08 & $20 \times 10$ & \textbf{523} & \textbf{523} & 529 & 3.08 \\
-         \hline
-        Mk09 & $20 \times 10$ & \textbf{307} & \textbf{307} & 412.6 & 4.47 \\
-         \hline
-        Mk10 & $20 \times 15$ & 189 & 193 & 338.8 & 5.05 \\
-         \hline 
-    \end{tabular}
-\end{table}
-
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=\linewidth]{report/Pictures/brandimarte_10_100.png}
-\end{figure}
-
 \subsubsection{Résultats de notre algorithme pour une population de 50 individus et une génération maximale de 150}
 
 \begin{table}[!h]
@@ -120,6 +84,8 @@ Les temps moyens d'exécution sont donnés en secondes.
     \includegraphics[width=\linewidth]{report/Pictures/brandimarte_200_500.png}
 \end{figure}
 
+\newpage
+
 \subsubsection{Résultats de notre algorithme pour une population de 500 individus et une génération maximale de 1000}
 
 \begin{table}[!h]
@@ -155,3 +121,25 @@ Les temps moyens d'exécution sont donnés en secondes.
     \centering
     \includegraphics[width=\linewidth]{report/Pictures/brandimarte_200_500.png}
 \end{figure}
+
+\subsubsection{Interpolation des résultats et temps de calcul nécessaire pour arriver à l'optimum}
+
+Supposons que la meilleure solution trouvée soit fonction du temps de calcul. En effet, plus l'algorithme génétique tourne longtemps, plus il a de chance de converger vers l'optimum.
+
+Nous ne nous intéresserons pas aux fichiers \textit{Mk03} et \textit{Mk08} car les solutions optimales ont été trouvées précédemment, ni à \textit{Mk10} car l'optimum n'est pas connu.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\linewidth]{report/Pictures/guessed_computation_time_brandimarte.png}
+\end{figure}
+
+En relançant un certain nombre d'instance de l'algorithme génétique, nous sommes parvenu à interpoler les fonctions objectives en fonction du temps de calcul pour chaque fichier à l'aide d'un algorithme appelé \textit{Piecewise Cubic Hermite Interpolating Polynomial}. Nous ne rentrerons pas dans les détails techniques de cet algorithme. A partir de ces interpolations, nous cherchons pour quel temps de calcul nous obtenons la fonction objective optimale.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\linewidth]{report/Pictures/objective_function_as_function_of_time.png}
+\end{figure}
+
+Les ronds correspondent aux points résultant des évaluations de l'algorithme génétique, les étoiles aux optima connus et les courbes en pointillé correspondent aux splines résultant des interpolations.
+
+Ces résultats sont cependant à prendre avec des pincettes, absolument rien ne les garantie principalement du fait du peu de nombres de points que l'on a calculé (il nous a fallu plusieurs jours pour calculer cet ensemble de points étant donné que l'on a repris le principe d'évaluation des solutions décrit précédemment, la contrainte temporelle nous a donc limité sur la densité de cet ensemble).
