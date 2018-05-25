@@ -2,13 +2,87 @@
 
 \subsection{Méthode d'évaluation de la qualité}
 
+Cette algorithme prend en entrée le chemin d'accès vers un répertoire contenant des fichiers \textit{.fjs}. Pour chacun des fichiers présents dans ce répertoire, l'algorithme génétique sera exécuté cinq fois avec les mêmes paramètres. Il s'agira ensuite de calculer le temps moyen des solutions (leur fonction objective), mais aussi le temps d'exécution moyen pour chaque fichier.
 
+Le code correspondant est disponible dans le fichier \textit{evaluatesolutions.py}.
 
 \subsection{Résultats obtenus}
 
-Nous avons décidé de confronter notre algorithme aux résultats connus pour le \textit{Brandimarte_Data}. Dans les tableaux suivants, LB correspond aux bornes inférieures connues et UB aux bornes supérieures connues de l'optimum. $n$ correspond au nombre de job et $m$ au nombre de machines.
+Nous avons décidé de confronter notre algorithme aux résultats connus pour le \textit{Brandimarte\_Data}. Dans les tableaux suivants, LB correspond aux bornes inférieures connues et UB aux bornes supérieures connues de l'optimum. $n$ correspond au nombre de job et $m$ au nombre de machines.
 
 Les temps moyens d'exécution sont donnés en secondes.
+
+\subsubsection{Résultats de notre algorithme pour une population de 10 individus et une génération maximale de 100}
+
+\begin{table}[!h]
+    \renewcommand{\arraystretch}{1.5}
+    \centering
+    \begin{tabular}{p{\textwidth/7} c c c c c}
+        Instance & $n \times m$ & LB & UB & Temps moyen & Temps d'exécution moyen \\
+         \hline
+        Mk01 & $10 \times 6$ & \textbf{40} & \textbf{40} & 48.8 & 1.19 \\
+         \hline
+        Mk02 & $10 \times 6$ & \textbf{26} & \textbf{26} & 45.2 & 1.57 \\
+         \hline
+        Mk03 & $15 \times 8$ & \textbf{204} & \textbf{204} & 252.8 & 3.04 \\
+         \hline
+        Mk04 & $15 \times 8$ & \textbf{60} & \textbf{60} & 81.4 & 1.47 \\
+         \hline
+        Mk05 & $15 \times 4$ & \textbf{172} & \textbf{172} & 197.2 & 1.63 \\
+         \hline
+        Mk06 & $10 \times 15$ & \textbf{57} & \textbf{57} & 127.6 & 3.17 \\
+         \hline
+        Mk07 & $20 \times 5$ & \textbf{139} & \textbf{139} & 206.2 & 2.10 \\
+         \hline
+        Mk08 & $20 \times 10$ & \textbf{523} & \textbf{523} & 529 & 3.08 \\
+         \hline
+        Mk09 & $20 \times 10$ & \textbf{307} & \textbf{307} & 412.6 & 4.47 \\
+         \hline
+        Mk10 & $20 \times 15$ & 189 & 193 & 338.8 & 5.05 \\
+         \hline 
+    \end{tabular}
+\end{table}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\linewidth]{report/Pictures/brandimarte_10_100.png}
+\end{figure}
+
+\subsubsection{Résultats de notre algorithme pour une population de 50 individus et une génération maximale de 150}
+
+\begin{table}[!h]
+    \renewcommand{\arraystretch}{1.5}
+    \centering
+    \begin{tabular}{p{\textwidth/7} c c c c c}
+        Instance & $n \times m$ & LB & UB & Temps moyen & Temps d'exécution moyen \\
+         \hline
+        Mk01 & $10 \times 6$ & \textbf{40} & \textbf{40} & 44.4 & 6.91 \\
+         \hline
+        Mk02 & $10 \times 6$ & \textbf{26} & \textbf{26} & 40.8 & 11.1 \\
+         \hline
+        Mk03 & $15 \times 8$ & \textbf{204} & \textbf{204} & 235.6 & 22.6 \\
+         \hline
+        Mk04 & $15 \times 8$ & \textbf{60} & \textbf{60} & 72.8 & 10.71 \\
+         \hline
+        Mk05 & $15 \times 4$ & \textbf{172} & \textbf{172} & 189 & 12.02 \\
+         \hline
+        Mk06 & $10 \times 15$ & \textbf{57} & \textbf{57} & 114.2 & 26.73 \\
+         \hline
+        Mk07 & $20 \times 5$ & \textbf{139} & \textbf{139} & 198 & 15.45 \\
+         \hline
+        Mk08 & $20 \times 10$ & \textbf{523} & \textbf{523} & 523 & 22.13 \\
+         \hline
+        Mk09 & $20 \times 10$ & \textbf{307} & \textbf{307} & 391.4 & 34.11 \\
+         \hline
+        Mk10 & $20 \times 15$ & 189 & 193 & 317 & 39.95 \\
+         \hline 
+    \end{tabular}
+\end{table}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\linewidth]{report/Pictures/brandimarte_50_150.png}
+\end{figure}
 
 \subsubsection{Résultats de notre algorithme pour une population de 200 individus et une génération maximale de 500}
 
@@ -41,6 +115,11 @@ Les temps moyens d'exécution sont donnés en secondes.
     \end{tabular}
 \end{table}
 
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\linewidth]{report/Pictures/brandimarte_200_500.png}
+\end{figure}
+
 \subsubsection{Résultats de notre algorithme pour une population de 500 individus et une génération maximale de 1000}
 
 \begin{table}[!h]
@@ -49,25 +128,30 @@ Les temps moyens d'exécution sont donnés en secondes.
     \begin{tabular}{p{\textwidth/7} c c c c c}
         Instance & $n \times m$ & LB & UB & Temps moyen & Temps d'exécution moyen \\
          \hline
-        Mk01 & $10 \times 6$ & \textbf{40} & \textbf{40} & & \\
+        Mk01 & $10 \times 6$ & \textbf{40} & \textbf{40} & 41.6 & 521.59 \\
          \hline
-        Mk02 & $10 \times 6$ & \textbf{26} & \textbf{26} & & \\
+        Mk02 & $10 \times 6$ & \textbf{26} & \textbf{26} & 31.2 & 928.05 \\
          \hline
-        Mk03 & $15 \times 8$ & \textbf{204} & \textbf{204} & & \\
+        Mk03 & $15 \times 8$ & \textbf{204} & \textbf{204} & 204 & 1880.24 \\
          \hline
-        Mk04 & $15 \times 8$ & \textbf{60} & \textbf{60} & & \\
+        Mk04 & $15 \times 8$ & \textbf{60} & \textbf{60} & 67 & 879.17 \\
          \hline
-        Mk05 & $15 \times 4$ & \textbf{172} & \textbf{172} & & \\
+        Mk05 & $15 \times 4$ & \textbf{172} & \textbf{172} & 178.6 & 959.05 \\
          \hline
-        Mk06 & $10 \times 15$ & \textbf{57} & \textbf{57} & & \\
+        Mk06 & $10 \times 15$ & \textbf{57} & \textbf{57} & 82.2 & 1845.56 \\
          \hline
-        Mk07 & $20 \times 5$ & \textbf{139} & \textbf{139} & & \\
+        Mk07 & $20 \times 5$ & \textbf{139} & \textbf{139} & 155.2 & 1181.74 \\
          \hline
-        Mk08 & $20 \times 10$ & \textbf{523} & \textbf{523} & & \\
+        Mk08 & $20 \times 10$ & \textbf{523} & \textbf{523} & 523 & 1978.39 \\
          \hline
-        Mk09 & $20 \times 10$ & \textbf{307} & \textbf{307} & & \\
+        Mk09 & $20 \times 10$ & \textbf{307} & \textbf{307} & 339 & 2680.10 \\
          \hline
-        Mk10 & $20 \times 15$ & 189 & 193 \\
+        Mk10 & $20 \times 15$ & 189 & 193 & 263.6 & 3228.08 \\
          \hline 
     \end{tabular}
 \end{table}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\linewidth]{report/Pictures/brandimarte_200_500.png}
+\end{figure}
