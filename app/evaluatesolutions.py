@@ -16,7 +16,7 @@ class EvaluateSolutions:
 		self.__path = path
 		self.__files_list = {}
 
-	def run(self, population_size=500, max_generation=1000):
+	def run(self, population_size=100, max_generation=200):
 		results = {}
 		print(colored("[EVALUATION]", "red"), "Population size =", population_size, "& Max generation =",
 			  max_generation)

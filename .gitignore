@@ -1,3 +1,4 @@
 .idea/
 app/__pycache__/
 app/output/*.png
+app/test.py
