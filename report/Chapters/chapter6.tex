@@ -2,7 +2,7 @@
 
 \subsection{Méthode d'évaluation de la qualité}
 
-Cette algorithme prend en entrée le chemin d'accès vers un répertoire contenant des fichiers \textit{.fjs}. Pour chacun des fichiers présents dans ce répertoire, l'algorithme génétique sera exécuté cinq fois avec les mêmes paramètres. Il s'agira ensuite de calculer le temps moyen des solutions (leur fonction objective), mais aussi le temps d'exécution moyen pour chaque fichier.
+Cet algorithme prend en entrée le chemin d'accès vers un répertoire contenant des fichiers \textit{.fjs}. Pour chacun des fichiers présents dans ce répertoire, l'algorithme génétique sera exécuté cinq fois avec les mêmes paramètres. Il s'agira ensuite de calculer le temps moyen des solutions (leur fonction objective), mais aussi le temps d'exécution moyen pour chaque fichier.
 
 Le code correspondant est disponible dans le fichier \textit{evaluatesolutions.py}.
 
@@ -133,7 +133,7 @@ Nous ne nous intéresserons pas aux fichiers \textit{Mk03} et \textit{Mk08} car 
     \includegraphics[width=\linewidth]{report/Pictures/guessed_computation_time_brandimarte.png}
 \end{figure}
 
-En relançant un certain nombre d'instance de l'algorithme génétique, nous sommes parvenu à interpoler les fonctions objectives en fonction du temps de calcul pour chaque fichier à l'aide d'un algorithme appelé \textit{Piecewise Cubic Hermite Interpolating Polynomial}. Nous ne rentrerons pas dans les détails techniques de cet algorithme. A partir de ces interpolations, nous cherchons pour quel temps de calcul nous obtenons la fonction objective optimale.
+En relançant un certain nombre d'instance de l'algorithme génétique, nous sommes parvenu à interpoler les fonctions objectives en fonction du temps de calcul pour chaque fichier à l'aide d'un algorithme appelé \textit{Piecewise Cubic Hermite Interpolating Polynomial} dont nous ne rentrerons pas dans les détails techniques. A partir de ces interpolations, nous cherchons pour quel temps de calcul nous obtenons la fonction objective optimale.
 
 \begin{figure}[!h]
     \centering

@@ -31,7 +31,7 @@ Lors de cet appel, la méthode \textit{run} va commencer par supprimer la sortie
 
 \lstinputlisting[firstline=24, lastline=42]{./app/scheduler.py}
 
-La variable \textit{best\_candidates} correspond au retour de l'heuristique considérée. Il s'agit d'un dictionnaire associant aux identifiants des machines la liste des opérations (ainsi que l'activité auxquelle elles sont rattachées) qu'elles devraient traiter à l'instant $t$.
+La variable \textit{best\_candidates} correspond au retour de l'heuristique considérée. Il s'agit d'un dictionnaire associant aux identifiants des machines la liste des opérations (ainsi que l'activité auquelle elles sont rattachées) qu'elles devraient traiter à l'instant $t$.
 
 La boucle \textit{for} parcourant \textit{best\_candidates.items()} permet d'affecter l'opération sur la bonne machine.
 

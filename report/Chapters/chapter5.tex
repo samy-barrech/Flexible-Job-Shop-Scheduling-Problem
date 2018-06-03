@@ -12,7 +12,7 @@ Le code servant à réaliser les benchmarks est disponible dans le fichier \text
 
 \lstinputlisting[firstline=13, lastline=18]{./app/benchmarks.py}
 
-On crée une liste de $samples$ valeurs entre $start$ et $stop$ espacées de façon logarithmique. Ceci permet d'otenir beaucoup de valuers faibles et moins de valeurs importantes ce qui est intéressant pour comparer la fonction objective pour différents couples taille de population et génération maximale par la suite.
+On crée une liste de $samples$ valeurs entre $start$ et $stop$, espacées de façon logarithmique. Ceci permet d'otenir beaucoup de valeurs faibles et moins de valeurs importantes ce qui est intéressant pour comparer la fonction objectif pour différents couples taille de population et génération maximale par la suite.
 
 \subsubsection{Benchmarks en fonction de la taille de la population}
 
@@ -32,7 +32,7 @@ Cette fonction permet d'étudier la complexité temporelle en fonction de la gé
 
 \lstinputlisting[firstline=69, lastline=106]{./app/benchmarks.py}
 
-Cette fonction permet d'étudier la complexité temporelle en fonction de la taille des populations et de la génération maximale mais aussi l'évolution de la fonction objective du meilleur individu en fonction de ces mêmes paramètres.
+Cette fonction permet d'étudier la complexité temporelle en fonction de la taille des populations et de la génération maximale mais aussi l'évolution de la fonction objectif du meilleur individu en fonction de ces mêmes paramètres.
 
 \subsection{Comparaison du temps d'exécution par rapport à la taille de la population}
 
@@ -97,7 +97,7 @@ La taille de la population est ici fixée à $100$. Nous faisons évoluer la gé
     \includegraphics[scale=0.9]{report/Pictures/setb4c9_benchmarks_generation.png}
 \end{figure}
 
-A $population\_size$ fixé, le temps de calcul est linéaire en fonction de la génération maximale. Ce résultat n'est pas surprenant, mais il nous semblait important de le vérifier.
+A $population\_size$ fixée, le temps de calcul est linéaire en fonction de la génération maximale. Ce résultat n'est pas surprenant, mais il nous semblait important de le vérifier.
 
 \newpage
 
@@ -112,7 +112,7 @@ On retrouve bien le côté linéaire par rapport à la génération maximale et 
 
 \newpage
 
-\subsection{Comparaison de la fonction objective par rapport à la taille de la population et la génération maximale}
+\subsection{Comparaison de la fonction objectif par rapport à la taille de la population et la génération maximale}
 
 \begin{figure}[!h]
     \centering

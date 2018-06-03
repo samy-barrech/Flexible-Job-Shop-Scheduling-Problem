@@ -30,7 +30,7 @@ Afin de trouver un individu initial, nous réalisons une copie profonde de la li
 
 \lstinputlisting[firstline=39, lastline=41]{./app/geneticscheduler.py}
 
-Le \textit{scheduler} est ensuite appelé sur les listes temporaires précédemment créer en utilisant une heuristique de choix aléatoire pour les opérations afin d'augmenter la diversité de la population et éviter de converger vers un optimum local.
+Le \textit{scheduler} est ensuite appelé sur les listes temporaires précédemment créées en utilisant une heuristique de choix aléatoire pour les opérations afin d'augmenter la diversité de la population et éviter de converger vers un optimum local.
 
 \lstinputlisting[firstline=43, lastline=49]{./app/geneticscheduler.py}
 
@@ -105,7 +105,7 @@ Cette méthode permet de calculer les bornes min et max de permutation pour une 
 
 \lstinputlisting[firstline=149, lastline=170]{./app/geneticscheduler.py}
 
-Tant que l'on a pas trouvé une permutation possible, on sélectionne deux activités au hasard et on vérifie si elles sont permutables, c'est à dire si chacune appartient au domaine de permutation de l'autre. Une fois cette permutation trouvée, elle est effectuée et le nouvel individu est renvoyé.
+Tant que l'on n'a pas trouvé une permutation possible, on sélectionne deux activités au hasard et on vérifie si elles sont permutables, c'est à dire si chacune appartient au domaine de permutation de l'autre. Une fois cette permutation trouvée, elle est effectuée et le nouvel individu est renvoyé.
 
 Il est à noter qu'une permutation est forcément possible à partir du moment où le nombre de jobs est au moins égal à deux.
 
@@ -145,7 +145,7 @@ Pour un individu donné, on simule son exécution afin de pouvoir le dessiner é
 
 \lstinputlisting[firstline=227, lastline=239]{./app/geneticscheduler.py}
 
-Lors de l'appel de la méthode \textit{run\_genetic}, on commence par désactiver la sortie standard si demandé puis on initialise la libraire \textit{Deap}. On indique que l'on cherche à minimiser la fonction objectif. On enregistre également auprès de \textit{Deap} nos fonctions de création, de mutation, de permutation et d'évolution.
+Lors de l'appel de la méthode \textit{run\_genetic}, on commence par désactiver la sortie standard si demandé puis on initialise la librairie \textit{Deap}. On indique que l'on cherche à minimiser la fonction objectif. On enregistre également auprès de \textit{Deap} nos fonctions de création, de mutation, de permutation et d'évolution.
 
 \lstinputlisting[firstline=241, lastline=242]{./app/geneticscheduler.py}
 
