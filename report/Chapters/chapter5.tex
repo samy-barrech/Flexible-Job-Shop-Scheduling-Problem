@@ -40,7 +40,7 @@ La génération maximale est ici fixée à $100$. Nous faisons évoluer la taill
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[]{report/Pictures/setb4c9_benchmarks_population.png}
+    \includegraphics[scale=0.9]{report/Pictures/setb4c9_benchmarks_population.png}
 \end{figure}
 
 A $max\_generation$ fixé, le temps de calcul n'est pas linéaire en fonction du nombre d'individus dans la population. Il est intéressant de savoir s'il est polynomial ou exponentiel.
@@ -49,7 +49,7 @@ Afin d'obtenir de meilleurs résultats, on commence par faire une interpolation 
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[]{report/Pictures/setb4c9_expo_semilogy.png}
+    \includegraphics[scale=0.9]{report/Pictures/setb4c9_expo_semilogy.png}
 \end{figure}
 
 En utilisant une échelle logarithmique pour les ordonnées, on peut déjà éliminer l'hypothèse d'une complexité temporelle exponentielle. En effet, dans un tel repère, les représentations graphiques des fonctions exponentielles sont des droites.
@@ -85,7 +85,7 @@ Le résidu le plus faible est obtenu pour un polynôme de degré 4, notre comple
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[]{report/Pictures/setb4c9_benchmarks_population_approximated.png}
+    \includegraphics[scale=0.9]{report/Pictures/setb4c9_benchmarks_population_approximated.png}
 \end{figure}
 
 \subsection{Comparaison du temps d'exécution par rapport à la génération maximale}
@@ -94,7 +94,7 @@ La taille de la population est ici fixée à $100$. Nous faisons évoluer la gé
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[]{report/Pictures/setb4c9_benchmarks_generation.png}
+    \includegraphics[scale=0.9]{report/Pictures/setb4c9_benchmarks_generation.png}
 \end{figure}
 
 A $population\_size$ fixé, le temps de calcul est linéaire en fonction de la génération maximale. Ce résultat n'est pas surprenant, mais il nous semblait important de le vérifier.
@@ -105,7 +105,7 @@ A $population\_size$ fixé, le temps de calcul est linéaire en fonction de la g
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[]{report/Pictures/setb4c9_benchmarks_generation_with_computation_time.png}
+    \includegraphics[scale=0.9]{report/Pictures/setb4c9_benchmarks_generation_with_computation_time.png}
 \end{figure}
 
 On retrouve bien le côté linéaire par rapport à la génération maximale et polynomial par rapport à la taille de la population.
@@ -116,7 +116,7 @@ On retrouve bien le côté linéaire par rapport à la génération maximale et 
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[]{report/Pictures/setb4c9_benchmarks_generation_with_solution_time.png}
+    \includegraphics[scale=0.9]{report/Pictures/setb4c9_benchmarks_generation_with_solution_time.png}
 \end{figure}
 
 Nous avons également décidé de regarder le temps de la solution renvoyé par l'algorithme génétique en fonction de la taille de la population et de la génération maximale.

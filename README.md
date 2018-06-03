@@ -21,6 +21,12 @@ Example: Fisher and Thompson 6x6 instance, alternate name (mt06)
 first row = 6 jobs and 6 machines 1 machine per operation
 second row: job 1 has 6 operations, the first operation can be processed by 1 machine that is machine 3 with processing time 1.
 
+## Run the program
+
+`python main.py path/to/file`
+
+If path/to/file is omitted, the defautl value is data/test.fjs
+
 ## Results
 
 ### Test file
