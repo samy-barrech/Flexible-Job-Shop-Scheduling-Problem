@@ -67,7 +67,7 @@ Soit \textit{xdata} la liste des tailles de population évaluées par l'algorith
 x = np.linspace(xdata[0], xdata[-1], 150)
 \end{lstlisting}
 
-On évalue ainsi le résidu pour des polynômes de degrés différents, ici entre 2 et 8. Le résidu correspond à la somme des norme 2 de la différence entre notre approximation polynomiale et les valeurs de la spline :
+On évalue ainsi le résidu pour des polynômes de degrés différents, ici entre 2 et 8. Le résidu correspond à la somme des normes 2 de la différence entre notre approximation polynomiale et les valeurs de la spline :
 
 $$ r_i = \sum_{j = 1}^{150} \left\| s(x_j) - p_i(x__j) \right\| $$
 
