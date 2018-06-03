@@ -25,7 +25,7 @@ second row: job 1 has 6 operations, the first operation can be processed by 1 ma
 
 `python main.py path/to/file`
 
-If path/to/file is omitted, the defautl value is data/test.fjs
+If path/to/file is omitted, the default value is data/test.fjs
 
 ## Results
 
